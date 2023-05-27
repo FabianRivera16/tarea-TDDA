@@ -33,22 +33,18 @@ nombre varchar(50),
 stock int,
 cod_tipo_producto int,
 primary key (cod_producto),
-constraint foreign key (cod_tipo_producto) references tipo_producto(cod_tipo_producto) 
+foreign key (cod_tipo_producto) references tipo_producto(cod_tipo_producto)
 );
+
 
 CREATE TABLE producto_usuario(
 cod_producto_usuario int not null auto_increment,
 cod_producto int not null,
 id_usuario int not null,
 primary key (cod_producto_usuario),
-constraint foreign key (cod_producto) references producto(cod_producto),
-constraint foreign key (id_usuario) references usuario(id_usuario)
+foreign key (cod_producto) references producto(cod_producto),
+foreign key (id_usuario) references usuario(id_usuario)
 );
-
-ALTER TABLE producto
-add column cod_producto_usuario int not null,
-ADD CONSTRAINT FOREIGN KEY (cod_producto_usuario)
-REFERENCES producto_usuario(cod_producto_usuario);
 
 
 CREATE TABLE bodega(
@@ -62,8 +58,8 @@ cod_producto_bodega int not null auto_increment,
 cod_bodega int not null,
 cod_producto int not null,
 primary key (cod_producto_bodega),
-constraint foreign key (cod_bodega)references bodega(cod_bodega),
-constraint foreign key (cod_producto) references producto(cod_producto)
+foreign key (cod_bodega)references bodega(cod_bodega),
+foreign key (cod_producto) references producto(cod_producto)
 );
 
 CREATE TABLE autor_producto(
@@ -71,8 +67,8 @@ cod_autor_producto int not null auto_increment,
 cod_autor int not null,
 cod_producto int not null,
 primary key (cod_autor_producto),
-constraint foreign key (cod_autor) references autor(cod_autor),
-constraint foreign key (cod_producto) references producto(cod_producto)
+foreign key (cod_autor) references autor(cod_autor),
+foreign key (cod_producto) references producto(cod_producto)
 );
 
 CREATE TABLE movimiento(
@@ -85,6 +81,60 @@ tipo_movimiento varchar(10),
 cod_producto int not null,
 cod_bodega int not null,
 primary key (id_movimiento),
-constraint foreign key (cod_producto) references producto(cod_producto),
-constraint foreign key (cod_bodega) references bodega(cod_bodega)
-)
+foreign key (cod_producto) references producto(cod_producto),
+foreign key (cod_bodega) references bodega(cod_bodega)
+);
+
+/*INICIO EJEMPLO DE INICIO DE SESION (PARTE BASE DE DATOS)*/
+
+insert into usuario(nombre,contraseña,cargo)
+values ('fabian','fabian','jefe de bodega');
+
+
+insert into autor(nombre)
+values ('J.K.Rowling');
+
+
+insert into tipo_producto (nombre_tipo)
+values ('libro');
+
+
+insert into bodega (nombre_bodega)
+values('bodega01');
+insert into bodega (nombre_bodega)
+values('bodega02');
+
+insert into editorial (nombre_editorial)
+values ('Salamandra');
+
+
+INSERT INTO producto (nombre, stock,cod_tipo_producto)
+VALUES ('Harry Potter y la piedra filosofal', 99,1);
+
+
+INSERT INTO producto_usuario (cod_producto, id_usuario)
+VALUES (1, 1);
+
+
+insert into autor_producto(cod_autor,cod_producto)
+values (1,1);
+
+
+insert into producto_bodega (cod_bodega,cod_producto)
+values(1,1);
+
+
+insert into movimiento (bodega_origen,bodega_destino,producto,cantidad,tipo_movimiento,cod_producto,cod_bodega)
+values('bodega01','bodega02','Harry Potter y la piedra filosofal',20,'salida',1,1);
+
+insert into tipo_producto(nombre_tipo)
+values('revista');
+
+insert into producto(nombre,stock,cod_tipo_producto)
+values('Harry Potter y la camara secreta', 99,1);
+
+insert into movimiento (bodega_origen,bodega_destino,producto,cantidad,tipo_movimiento,cod_producto,cod_bodega)
+values('bodega01','bodega,02','Harry Potter y la camara secreta',25,'entrada',2,1);
+
+insert into usuario(nombre, contraseña, cargo) value("Matias Sepulveda", "M4t12003!", "Bodeguero");
+select * from usuario;
