@@ -13,7 +13,7 @@ class Login:
                                                         password="", 
                                                         database="libreria")
         
-    #Creacion del metodo inicioSesion
+    #Creacion del metodo inicioSesion()
         
     def inicioSesion(self):
 
@@ -44,17 +44,92 @@ class Login:
                 consulta2 = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
                 cursor1.execute(consulta2)
                 resultado2 = cursor1.fetchone()
+                cursor1.close()
 
                 if contrasena in resultado2:
-                    print("La contraseña ingresada es correcta.")
+                    print("*-----------------------------------------*")
+                    print("*******************************************")
+                    print("*** La contraseña ingresada es correcta ***")
+                    print("*******************************************")
+                    print("*-----------------------------------------*")
+
+                    print("*------------------------------------------*")
+                    print("********************************************")
+                    print("** ¡Ha ingresado exitosamente al sistema! **")
+                    print("********************************************")
+                    print("*------------------------------------------*")
+
                     break
 
                 else:
-                    print("La contraseña ingresada es incorrecta.")
+                    print("*-----------------------------------------*")
+                    print("*******************************************")
+                    print("** La contraseña ingresada es incorrecta **")
+                    print("*******************************************")
+                    print("*-----------------------------------------*")
 
             else:
                 print("EL nombre de usuario ingresado no se encuentra en el sistema.")
                 print("Intentalo de nuevo.")
+
+    def restablecerContrasena(self):
+
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                user="root", 
+                                                password="", 
+                                                database="libreria")
+        
+        cursor2 = self.conexion.cursor()
+
+        print("*--------------------------------------*")
+        print("****************************************")
+        print("******** Restablecer Contraseña ********")
+        print("****************************************")
+        print("*--------------------------------------*")
+
+        nombre_usuario = input("Ingrese su nombre de usuario: ")
+        consulta1 = f"""SELECT nombre FROM usuario"""
+        cursor2.execute(consulta1)
+        resultados = cursor2.fetchone()
+
+        if nombre_usuario in resultados:
+
+            self.conexion = mysql.connector.connect(host="localhost", 
+                                                    user="root", 
+                                                    password="", 
+                                                    database="libreria")
+            
+            cursor3 = self.conexion.cursor()
+
+            print("*--------------------------------------------------------*")
+            print("*********************************************************")
+            print("** Se ha encontrado el nombre de usuario en el sistema **")
+            print("*********************************************************")
+            print("*--------------------------------------------------------*")
+
+            nueva_contrasena = input("Ingresa tu nueva contraseña: ")
+
+            consulta2 = f"""UPDATE usuario SET contraseña = '{nueva_contrasena}' WHERE nombre = '{nombre_usuario}'"""
+            cursor3.execute(consulta2)
+            self.conexion.commit()
+            cursor3.close()
+
+            print("*-----------------------------------------------*")
+            print("*************************************************")
+            print("** ¡La contraseña se ha cambiado exitosamente! **")
+            print("*************************************************")
+            print("*-----------------------------------------------*")
+
+
+        else:
+            print("*----------------------------------------------------------------*")
+            print("******************************************************************")
+            print("** El nombre de usuario ingresado no se encuentra en el sistema **")
+            print("******************************************************************")
+            print("*----------------------------------------------------------------*")
+
+
+
                 
 
 def menuLogin():
@@ -86,21 +161,30 @@ while True:
     if opmenu == "1":
         login1.inicioSesion()
         
-    
     elif opmenu == "2":
-        pass
+        login1.restablecerContrasena()
 
     elif opmenu == "0":
-        print("El sistema ha cerrado.")
+        print("*----------------------------------------*")
+        print("******************************************")
+        print("*** El sistema se ha cerrado con exito ***")
+        print("******************************************")
+        print("*----------------------------------------*")
         break
 
     else:
-        print("La opcion ingresada no esta disponible")
+        print("*------------------------------------------*")
+        print("********************************************")
+        print("** La opcion ingresada no esta disponible **")
+        print("********************************************")
+        print("*------------------------------------------*")
 
 
 
 
         
+
+
 
 
 
