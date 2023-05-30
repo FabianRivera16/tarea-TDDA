@@ -1,0 +1,106 @@
+#Se realiza la importacion del modulo MySQL
+
+import mysql.connector
+
+#Creacion de la clase Login.
+
+class Login:
+
+    def __init__(self):
+
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                        user="root", 
+                                                        password="", 
+                                                        database="libreria")
+        
+    #Creacion del metodo inicioSesion
+        
+    def inicioSesion(self):
+
+        while True:
+
+            self.conexion = mysql.connector.connect(host="localhost", 
+                                                        user="root", 
+                                                        password="", 
+                                                        database="libreria")
+        
+            cursor1 = self.conexion.cursor()
+
+            print("*--------------------------------------*")
+            print("****************************************")
+            print("*********** Inicio de Sesion ***********")
+            print("****************************************")
+            print("*--------------------------------------*")
+
+            nombre_usuario = input("Ingrese su nombre de usuario: ")
+            consulta1 = f"""SELECT nombre FROM usuario"""
+            cursor1.execute(consulta1)
+            resultado1 = cursor1.fetchone()
+
+            if nombre_usuario in resultado1:
+                print("El nombre de usuario ingresado se encuentra en el sistema.")
+
+                contrasena = input("Ingrese su contraseña: ")
+                consulta2 = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
+                cursor1.execute(consulta2)
+                resultado2 = cursor1.fetchone()
+
+                if contrasena in resultado2:
+                    print("La contraseña ingresada es correcta.")
+                    break
+
+                else:
+                    print("La contraseña ingresada es incorrecta.")
+
+            else:
+                print("EL nombre de usuario ingresado no se encuentra en el sistema.")
+                print("Intentalo de nuevo.")
+                
+
+def menuLogin():
+
+    print("*--------------------------------------*")
+    print("****************************************")
+    print("****************************************")
+    print("*************** Empresa1 ***************")
+    print("****************************************")
+    print("****************************************")
+    print("** 1) Iniciar sesion en el sistema *****")
+    print("** 2) Restablecer contraseña ***********")
+    print("** 0) Salir el sistema *****************")
+    print("****************************************")
+    print("****************************************")
+    print("*--------------------------------------*")
+
+#Creacion de objeto de la clase Login
+
+login1 = Login()
+
+#Creacion del menú del Login
+
+while True:
+    menuLogin()
+
+    opmenu = input("Ingrese una de las opciones disponibles: ")
+
+    if opmenu == "1":
+        login1.inicioSesion()
+        
+    
+    elif opmenu == "2":
+        pass
+
+    elif opmenu == "0":
+        print("El sistema ha cerrado.")
+        break
+
+    else:
+        print("La opcion ingresada no esta disponible")
+
+
+
+
+        
+
+
+
