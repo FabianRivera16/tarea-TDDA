@@ -92,6 +92,7 @@ class Login:
         cursor2.execute(consulta1)
         resultados = cursor2.fetchone()
 
+
         if nombre_usuario in resultados:
 
             self.conexion = mysql.connector.connect(host="localhost", 
@@ -101,6 +102,8 @@ class Login:
             
             cursor3 = self.conexion.cursor()
 
+            cursor4 = self.conexion.cursor()
+
             print("*--------------------------------------------------------*")
             print("*********************************************************")
             print("** Se ha encontrado el nombre de usuario en el sistema **")
@@ -108,18 +111,30 @@ class Login:
             print("*--------------------------------------------------------*")
 
             nueva_contrasena = input("Ingresa tu nueva contraseña: ")
+            consultaad = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
+            cursor4.execute(consultaad)
+            resultado3 = cursor4.fetchone()
 
-            consulta2 = f"""UPDATE usuario SET contraseña = '{nueva_contrasena}' WHERE nombre = '{nombre_usuario}'"""
-            cursor3.execute(consulta2)
-            self.conexion.commit()
-            cursor3.close()
+            if nueva_contrasena in resultado3:
 
-            print("*-----------------------------------------------*")
-            print("*************************************************")
-            print("** ¡La contraseña se ha cambiado exitosamente! **")
-            print("*************************************************")
-            print("*-----------------------------------------------*")
+                print("*-----------------------------------------------*")
+                print("*************************************************")
+                print("*** La contraseña no ha podido ser modificada ***")
+                print("*************************************************")
+                print("*-----------------------------------------------*")
 
+            else:
+
+                consulta2 = f"""UPDATE usuario SET contraseña = '{nueva_contrasena}' WHERE nombre = '{nombre_usuario}'"""
+                cursor3.execute(consulta2)
+                self.conexion.commit()
+                cursor3.close()
+
+                print("*-----------------------------------------------*")
+                print("*************************************************")
+                print("** ¡La contraseña se ha cambiado exitosamente! **")
+                print("*************************************************")
+                print("*-----------------------------------------------*")
 
         else:
             print("*----------------------------------------------------------------*")
@@ -178,6 +193,13 @@ while True:
         print("** La opcion ingresada no esta disponible **")
         print("********************************************")
         print("*------------------------------------------*")
+
+
+
+
+        
+
+
 
 
 
