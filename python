@@ -1,8 +1,4 @@
-#Se realiza la importacion del modulo MySQL
-
 import mysql.connector
-
-#Creacion de la clase Login.
 
 class Login:
 
@@ -13,7 +9,7 @@ class Login:
                                                         password="", 
                                                         database="libreria")
         
-    #Creacion del metodo inicioSesion()
+        self.usuario = ""
         
     def inicioSesion(self):
 
@@ -33,25 +29,27 @@ class Login:
             print("*--------------------------------------*")
 
             nombre_usuario = input("Ingrese su nombre de usuario: ")
-            consulta1 = f"""SELECT nombre FROM usuario"""
+            consulta1 = f"""SELECT nombre FROM usuario WHERE nombre = '{nombre_usuario}'"""
             cursor1.execute(consulta1)
             resultado1 = cursor1.fetchone()
 
             if nombre_usuario in resultado1:
+                
+                self.conexion = mysql.connector.connect(host="localhost", 
+                                                        user="root", 
+                                                        password="", 
+                                                        database="libreria")
+                
+                cursorr = self.conexion.cursor()
+
                 print("El nombre de usuario ingresado se encuentra en el sistema.")
 
                 contrasena = input("Ingrese su contraseña: ")
                 consulta2 = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
-                cursor1.execute(consulta2)
-                resultado2 = cursor1.fetchone()
-                cursor1.close()
+                cursorr.execute(consulta2)
+                resultado2 = cursorr.fetchone()
 
                 if contrasena in resultado2:
-                    print("*-----------------------------------------*")
-                    print("*******************************************")
-                    print("*** La contraseña ingresada es correcta ***")
-                    print("*******************************************")
-                    print("*-----------------------------------------*")
 
                     print("*------------------------------------------*")
                     print("********************************************")
@@ -59,6 +57,41 @@ class Login:
                     print("********************************************")
                     print("*------------------------------------------*")
 
+                    self.usuario = nombre_usuario
+
+                    libreria1 = Libreria()
+
+                    while True:
+
+                        menuSistema()
+
+                        opcions = input("Ingrese una de las siguiente opciones: ")
+
+                        if opcions == "1":
+                            pass
+
+                        elif opcions == "2":
+                            pass
+
+                        elif opcions == "3":
+                            pass
+
+                        elif opcions == "4":
+                            pass
+
+                        elif opcions == "5":
+                            libreria1.crearBodega()
+
+                        elif opcions == "6":
+                            pass
+
+                        elif opcions == "0":
+                            self.usuario = ""
+                            break
+
+                        else:
+                            pass
+                    
                     break
 
                 else:
@@ -90,8 +123,7 @@ class Login:
         nombre_usuario = input("Ingrese su nombre de usuario: ")
         consulta1 = f"""SELECT nombre FROM usuario"""
         cursor2.execute(consulta1)
-        resultados = cursor2.fetchone()
-
+        resultados = cursor2.fetchall()
 
         if nombre_usuario in resultados:
 
@@ -101,7 +133,6 @@ class Login:
                                                     database="libreria")
             
             cursor3 = self.conexion.cursor()
-
             cursor4 = self.conexion.cursor()
 
             print("*--------------------------------------------------------*")
@@ -144,15 +175,81 @@ class Login:
             print("*----------------------------------------------------------------*")
 
 
+class Libreria:
 
+    def __init__(self):
                 
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                user="root", 
+                                                password="", 
+                                                database="libreria")
+        
+    def crearBodega(self):
+
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                user="root", 
+                                                password="", 
+                                                database="libreria")
+        
+        cursor6 = self.conexion.cursor()
+        consulta1 = f"""SELECT cargo FROM usuario WHERE nombre = '{login1.usuario}'"""
+        cursor6.execute(consulta1)
+        resultados = cursor6.fetchone()
+
+        if "Jefe de Bodega" in resultados:
+
+            print("*----------------------------------------------------------------*")
+            print("******************************************************************")
+            print("********************** Creacion de Bodegas ***********************")
+            print("******************************************************************")
+            print("*----------------------------------------------------------------*")
+
+            cursor5 = self.conexion.cursor()
+            nombre_bodega = input("Ingrese el nombre de la nueva bodega: ")
+            consulta = f"""INSERT INTO bodega(nombre_bodega) VALUES('{nombre_bodega}')"""
+            cursor5.execute(consulta)
+            self.conexion.commit()
+            cursor5.close()
+
+            print("*----------------------------------------------------------------*")
+            print("******************************************************************")
+            print("************ ¡La Bodega ha sido creada exitosamente! *************")
+            print("******************************************************************")
+            print("*----------------------------------------------------------------*")
+
+        else:
+            print("*----------------------------------------------------------------*")
+            print("******************************************************************")
+            print("******* No tienes los permisos para utilizar esta funcion ********")
+            print("******************************************************************")
+            print("*----------------------------------------------------------------*")
+
+
+def menuSistema():
+
+    print("*----------------------------------------*")
+    print("******************************************")
+    print("******************************************")
+    print("***************** Empresa ****************")
+    print("******************************************")
+    print("******************************************")
+    print("** 1) Agregar Producto en una Bodega *****")
+    print("** 2) Eliminar Producto de una Bodega ****")
+    print("** 3) Crear Productos ********************")
+    print("** 4) Eliminar Productos *****************")
+    print("** 5) Crear Bodega ***********************")
+    print("** 6) Eliminar Bodega ********************")
+    print("** 0) Salir del Sistema ******************")
+    print("******************************************")
+    print("******************************************")
+    print("*----------------------------------------*")
 
 def menuLogin():
 
     print("*--------------------------------------*")
     print("****************************************")
     print("****************************************")
-    print("*************** Empresa1 ***************")
+    print("***************** Login ****************")
     print("****************************************")
     print("****************************************")
     print("** 1) Iniciar sesion en el sistema *****")
@@ -169,22 +266,27 @@ login1 = Login()
 #Creacion del menú del Login
 
 while True:
+
     menuLogin()
 
     opmenu = input("Ingrese una de las opciones disponibles: ")
 
     if opmenu == "1":
+
         login1.inicioSesion()
-        
+
     elif opmenu == "2":
+
         login1.restablecerContrasena()
 
     elif opmenu == "0":
+
         print("*----------------------------------------*")
         print("******************************************")
         print("*** El sistema se ha cerrado con exito ***")
         print("******************************************")
         print("*----------------------------------------*")
+        
         break
 
     else:
@@ -193,7 +295,6 @@ while True:
         print("** La opcion ingresada no esta disponible **")
         print("********************************************")
         print("*------------------------------------------*")
-
 
 
 
