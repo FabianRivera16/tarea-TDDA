@@ -224,6 +224,68 @@ class Libreria:
             print("******************************************************************")
             print("*----------------------------------------------------------------*")
 
+    def eliminarBodega(self):
+
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                user="root", 
+                                                password="", 
+                                                database="libreria")
+        
+        cursor7 = self.conexion.cursor()
+        consulta1 = f"""SELECT cargo FROM usuario WHERE nombre = '{login1.usuario}'"""
+        cursor7.execute(consulta1)
+        resultados = cursor7.fetchone()
+
+        if "Jefe de Bodega" in resultados:
+
+            print("*----------------------------------------------------------------*")
+            print("******************************************************************")
+            print("********************** Eliminar una Bodega ***********************")
+            print("******************************************************************")
+            print("*----------------------------------------------------------------*")
+
+            cursor8 = self.conexion.cursor()
+            codigo_bodega = int(input("Ingrese el codigo de la bodega: "))
+            consulta5 = f"""SELECT codigo FROM bodega"""
+            cursor8.execute(consulta5)
+            resultados = cursor7.fetchone()
+
+            if codigo_bodega in resultados:
+
+                cursor9 = self.conexion.cursor()
+                consulta6 = f"""DELETE FROM bodega WHERE codigo = '{codigo_bodega}'"""
+                cursor9.execute(consulta6)
+                self.conexion.commit()
+                cursor9.close()
+
+                print("*----------------------------------------------------------------*")
+                print("******************************************************************")
+                print("**************** La Bodega ha sido eliminada *******************")
+                print("******************************************************************")
+                print("*----------------------------------------------------------------*")
+
+            else:
+
+                print("*----------------------------------------------------------------*")
+                print("******************************************************************")
+                print("**************** La Bodega ingresada no existe *******************")
+                print("******************************************************************")
+                print("*----------------------------------------------------------------*")
+
+
+            print("*----------------------------------------------------------------*")
+            print("******************************************************************")
+            print("*********** ¡La Bodega ha sido eliminada exitosamente! ***********")
+            print("******************************************************************")
+            print("*----------------------------------------------------------------*")
+
+        else:
+            print("*----------------------------------------------------------------*")
+            print("******************************************************************")
+            print("******* No tienes los permisos para utilizar esta funcion ********")
+            print("******************************************************************")
+            print("*----------------------------------------------------------------*")
+
 
 def menuSistema():
 
@@ -295,6 +357,14 @@ while True:
         print("** La opcion ingresada no esta disponible **")
         print("********************************************")
         print("*------------------------------------------*")
+
+
+
+
+        
+
+
+
 
 
 
