@@ -59,6 +59,7 @@ CREATE TABLE producto_bodega(
 cod_producto_bodega int not null auto_increment,
 cod_bodega int not null,
 cod_producto int not null,
+stock
 primary key (cod_producto_bodega),
 foreign key (cod_bodega)references bodega(cod_bodega),
 foreign key (cod_producto) references producto(cod_producto)
@@ -75,16 +76,15 @@ foreign key (cod_producto) references producto(cod_producto)
 
 CREATE TABLE movimiento(
 id_movimiento int not null auto_increment,
-bodega_origen varchar(50),
-bodega_destino varchar(50),
+bodega_origen int,
+bodega_destino int,
 producto varchar(50),
 cantidad int,
 tipo_movimiento varchar(10),
 cod_producto int not null,
-cod_bodega int not null,
 primary key (id_movimiento),
 foreign key (cod_producto) references producto(cod_producto),
-foreign key (bodega_origen) references bodega(nombre_bodega),
-foreign key (bodega_destino) references bodega(nombre_bodega)
+foreign key (bodega_origen) references bodega(cod_bodega),
+foreign key (bodega_destino) references bodega(cod_bodega)
 );
 
