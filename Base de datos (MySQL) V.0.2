@@ -1,0 +1,90 @@
+CREATE DATABASE LIBRERIA;
+USE LIBRERIA;
+
+CREATE TABLE usuario(
+id_usuario int not null auto_increment,
+nombre varchar(50),
+contraseña varchar(24),
+cargo varchar(20),
+primary key (id_usuario)
+);
+
+CREATE TABLE autor(
+cod_autor int not null auto_increment,
+nombre varchar(50),
+primary key (cod_autor)
+);
+
+CREATE TABLE editorial(
+cod_editorial int not null auto_increment,
+nombre_editorial varchar(50),
+primary key (cod_editorial)
+);
+
+CREATE TABLE tipo_producto(
+cod_tipo_producto int not null auto_increment,
+nombre_tipo varchar(20),
+primary key (cod_tipo_producto)
+);
+
+CREATE TABLE producto(
+cod_producto int not null auto_increment,
+nombre varchar(50),
+cod_tipo_producto int,
+cod_editorial int,
+primary key (cod_producto),
+foreign key (cod_tipo_producto) references tipo_producto(cod_tipo_producto),
+foreign key (cod_editorial) references editorial(cod_editorial)
+);
+
+
+CREATE TABLE producto_usuario(
+cod_producto_usuario int not null auto_increment,
+cod_producto int not null,
+id_usuario int not null,
+primary key (cod_producto_usuario),
+foreign key (cod_producto) references producto(cod_producto),
+foreign key (id_usuario) references usuario(id_usuario)
+);
+
+
+CREATE TABLE bodega(
+cod_bodega int not null auto_increment,
+nombre_bodega varchar(50),
+primary key (cod_bodega),
+unique (nombre_bodega)
+);
+
+CREATE TABLE producto_bodega(
+cod_producto_bodega int not null auto_increment,
+cod_bodega int not null,
+cod_producto int not null,
+primary key (cod_producto_bodega),
+foreign key (cod_bodega)references bodega(cod_bodega),
+foreign key (cod_producto) references producto(cod_producto)
+);
+
+CREATE TABLE autor_producto(
+cod_autor_producto int not null auto_increment,
+cod_autor int not null,
+cod_producto int not null,
+primary key (cod_autor_producto),
+foreign key (cod_autor) references autor(cod_autor),
+foreign key (cod_producto) references producto(cod_producto)
+);
+
+CREATE TABLE movimiento(
+id_movimiento int not null auto_increment,
+bodega_origen varchar(50),
+bodega_destino varchar(50),
+producto varchar(50),
+cantidad int,
+tipo_movimiento varchar(10),
+cod_producto int not null,
+cod_bodega int not null,
+primary key (id_movimiento),
+foreign key (cod_producto) references producto(cod_producto),
+foreign key (bodega_origen) references bodega(nombre_bodega),
+foreign key (bodega_destino) references bodega(nombre_bodega)
+);
+
