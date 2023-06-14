@@ -42,6 +42,9 @@ CREATE TABLE producto_usuario(
 cod_producto_usuario int not null auto_increment,
 cod_producto int not null,
 id_usuario int not null,
+tipo_modificacion varchar(50),
+fecha_modificacion date,
+producto_modificado varchar(50),
 primary key (cod_producto_usuario),
 foreign key (cod_producto) references producto(cod_producto),
 foreign key (id_usuario) references usuario(id_usuario)
@@ -51,8 +54,9 @@ foreign key (id_usuario) references usuario(id_usuario)
 CREATE TABLE bodega(
 cod_bodega int not null auto_increment,
 nombre_bodega varchar(50),
+producto varchar(50),
+cantidad int,
 primary key (cod_bodega),
-unique (nombre_bodega)
 );
 
 CREATE TABLE producto_bodega(
