@@ -1,5 +1,7 @@
+#Conexion MySQL Workbench
 import mysql.connector
 
+#Creacion de la clase Login.
 class Login:
 
     def __init__(self):
@@ -11,6 +13,7 @@ class Login:
         
         self.usuario = ""
         
+    #Creacion del metodo inicioSesion.     
     def inicioSesion(self):
 
         while True:
@@ -42,7 +45,12 @@ class Login:
                 
                 cursorr = self.conexion.cursor()
 
-                print("El nombre de usuario ingresado se encuentra en el sistema.")
+                print("-------------------------------------------------")
+                print("*************************************************")
+                print("******* El nombre de usuario ingresado se *******") 
+                print("************ encuentra en el sistema ************")
+                print("*************************************************")
+                print("-------------------------------------------------")
 
                 contrasena = input("Ingrese su contraseña: ")
                 consulta2 = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
@@ -59,6 +67,7 @@ class Login:
 
                     self.usuario = nombre_usuario
 
+                    #Creacion del objeto "libreria1".
                     libreria1 = Libreria()
 
                     while True:
@@ -90,7 +99,11 @@ class Login:
                             break
 
                         else:
-                            pass
+                            print("--------------------------------------------")
+                            print("********************************************")
+                            print("***** La opcion ingresada no es valida *****")
+                            print("********************************************")
+                            print("--------------------------------------------")
                     
                     break
 
@@ -102,9 +115,18 @@ class Login:
                     print("*-----------------------------------------*")
 
             else:
-                print("EL nombre de usuario ingresado no se encuentra en el sistema.")
-                print("Intentalo de nuevo.")
+                print("-----------------------------------------------------")
+                print("*****************************************************")
+                print("******* El nombre de usuario ingresado no se ********")
+                print("************** encuentra en el sistema **************")
+                print("*****************************************************")
+                print("-----------------------------------------------------")
+                print("*****************************************************")
+                print("**************** Intentalo de nuevo *****************")
+                print("*****************************************************")
+                print("-----------------------------------------------------")
 
+    #Creacion del metodo restablecerContrasena.
     def restablecerContrasena(self):
 
         self.conexion = mysql.connector.connect(host="localhost", 
@@ -121,9 +143,9 @@ class Login:
         print("*--------------------------------------*")
 
         nombre_usuario = input("Ingrese su nombre de usuario: ")
-        consulta1 = f"""SELECT nombre FROM usuario"""
+        consulta1 = f"""SELECT nombre FROM usuario WHERE nombre = '{nombre_usuario}'"""
         cursor2.execute(consulta1)
-        resultados = cursor2.fetchall()
+        resultados = cursor2.fetchone()
 
         if nombre_usuario in resultados:
 
@@ -132,7 +154,6 @@ class Login:
                                                     password="", 
                                                     database="libreria")
             
-            cursor3 = self.conexion.cursor()
             cursor4 = self.conexion.cursor()
 
             print("*--------------------------------------------------------*")
@@ -156,6 +177,7 @@ class Login:
 
             else:
 
+                cursor3 = self.conexion.cursor()
                 consulta2 = f"""UPDATE usuario SET contraseña = '{nueva_contrasena}' WHERE nombre = '{nombre_usuario}'"""
                 cursor3.execute(consulta2)
                 self.conexion.commit()
@@ -168,12 +190,13 @@ class Login:
                 print("*-----------------------------------------------*")
 
         else:
-            print("*----------------------------------------------------------------*")
-            print("******************************************************************")
-            print("** El nombre de usuario ingresado no se encuentra en el sistema **")
-            print("******************************************************************")
-            print("*----------------------------------------------------------------*")
-
+            
+            print("-----------------------------------------------------")
+            print("*****************************************************")
+            print("******* El nombre de usuario ingresado no se ********")
+            print("************** encuentra en el sistema **************")
+            print("*****************************************************")
+            print("-----------------------------------------------------")
 
 class Libreria:
 
@@ -184,6 +207,7 @@ class Libreria:
                                                 password="", 
                                                 database="libreria")
         
+    #Creacion del metodo crearBodega.
     def crearBodega(self):
 
         self.conexion = mysql.connector.connect(host="localhost", 
@@ -206,7 +230,7 @@ class Libreria:
 
             cursor5 = self.conexion.cursor()
             nombre_bodega = input("Ingrese el nombre de la nueva bodega: ")
-            consulta = f"""INSERT INTO bodega(nombre_bodega) VALUES('{nombre_bodega}')"""
+            consulta = f"""INSERT INTO bodega(nombre_bodega, producto, cantidad) VALUES('{nombre_bodega}', 0, 0)"""
             cursor5.execute(consulta)
             self.conexion.commit()
             cursor5.close()
@@ -224,6 +248,7 @@ class Libreria:
             print("******************************************************************")
             print("*----------------------------------------------------------------*")
 
+    #Creacion del metodo eliminarBodega.
     def eliminarBodega(self):
 
         self.conexion = mysql.connector.connect(host="localhost", 
@@ -231,8 +256,6 @@ class Libreria:
                                                 password="", 
                                                 database="libreria")
         
-        
-
         cursor7 = self.conexion.cursor()
         consulta1 = f"""SELECT cargo FROM usuario WHERE nombre = '{login1.usuario}'"""
         cursor7.execute(consulta1)
@@ -251,14 +274,21 @@ class Libreria:
             print("******************************************************************")
             print("*----------------------------------------------------------------*")
 
-
             cursor8 = self.conexion.cursor()
+            consulta7 = f"""SELECT * FROM bodega"""
+            cursor8.execute(consulta7)
+            resultados3 = cursor8.fetchall()
+            
+            for i in resultados3:
+                print(i)
+                
+            print("-----------------------------------------------------------------")
 
             codigo_bodega = int(input("Ingrese el codigo de la bodega: "))
             consulta5 = f"""SELECT cod_bodega FROM bodega WHERE cod_bodega = '{codigo_bodega}'"""
             cursor8.execute(consulta5)
             resultados = cursor8.fetchone()
-
+            
             if codigo_bodega in resultados:
 
                 self.conexion = mysql.connector.connect(host="localhost", 
@@ -280,7 +310,6 @@ class Libreria:
                     print("******************************************************************")
                     print("*----------------------------------------------------------------*")
 
-
                 else:
 
                     self.conexion = mysql.connector.connect(host="localhost", 
@@ -300,7 +329,6 @@ class Libreria:
                     print("******************************************************************")
                     print("*----------------------------------------------------------------*")                    
 
-
             else:
 
                 print("*----------------------------------------------------------------*")
@@ -316,11 +344,10 @@ class Libreria:
             print("******************************************************************")
             print("*----------------------------------------------------------------*")
 
-
+#Creaciom de la funcion "menuSistema".
 def menuSistema():
 
     print("*----------------------------------------*")
-    print("******************************************")
     print("******************************************")
     print("***************** Empresa ****************")
     print("******************************************")
@@ -333,13 +360,12 @@ def menuSistema():
     print("** 6) Eliminar Bodega ********************")
     print("** 0) Salir del Sistema ******************")
     print("******************************************")
-    print("******************************************")
     print("*----------------------------------------*")
 
+#Creacion de la funcion "menuLogin".
 def menuLogin():
 
     print("*--------------------------------------*")
-    print("****************************************")
     print("****************************************")
     print("***************** Login ****************")
     print("****************************************")
@@ -348,15 +374,12 @@ def menuLogin():
     print("** 2) Restablecer contraseña ***********")
     print("** 0) Salir el sistema *****************")
     print("****************************************")
-    print("****************************************")
     print("*--------------------------------------*")
 
-#Creacion de objeto de la clase Login
-
+#Creacion de objeto "login1" de la clase Login.
 login1 = Login()
 
-#Creacion del menú del Login
-
+#Creacion del Programa Principal.
 while True:
 
     menuLogin()
@@ -387,6 +410,29 @@ while True:
         print("** La opcion ingresada no esta disponible **")
         print("********************************************")
         print("*------------------------------------------*")
+
+
+        
+
+
+
+
+
+
+        
+
+
+
+
+
+
+        
+
+
+
+
+
+
 
 
 
