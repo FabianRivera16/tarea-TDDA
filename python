@@ -83,7 +83,7 @@ class Login:
                             libreria1.crearBodega()
 
                         elif opcions == "6":
-                            pass
+                            libreria1.eliminarBodega()
 
                         elif opcions == "0":
                             self.usuario = ""
@@ -231,6 +231,8 @@ class Libreria:
                                                 password="", 
                                                 database="libreria")
         
+        
+
         cursor7 = self.conexion.cursor()
         consulta1 = f"""SELECT cargo FROM usuario WHERE nombre = '{login1.usuario}'"""
         cursor7.execute(consulta1)
@@ -238,46 +240,74 @@ class Libreria:
 
         if "Jefe de Bodega" in resultados:
 
+            self.conexion = mysql.connector.connect(host="localhost", 
+                                                    user="root", 
+                                                    password="", 
+                                                    database="libreria")
+
             print("*----------------------------------------------------------------*")
             print("******************************************************************")
             print("********************** Eliminar una Bodega ***********************")
             print("******************************************************************")
             print("*----------------------------------------------------------------*")
 
+
             cursor8 = self.conexion.cursor()
+
             codigo_bodega = int(input("Ingrese el codigo de la bodega: "))
-            consulta5 = f"""SELECT codigo FROM bodega"""
+            consulta5 = f"""SELECT cod_bodega FROM bodega WHERE cod_bodega = '{codigo_bodega}'"""
             cursor8.execute(consulta5)
-            resultados = cursor7.fetchone()
+            resultados = cursor8.fetchone()
 
             if codigo_bodega in resultados:
 
-                cursor9 = self.conexion.cursor()
-                consulta6 = f"""DELETE FROM bodega WHERE codigo = '{codigo_bodega}'"""
-                cursor9.execute(consulta6)
-                self.conexion.commit()
-                cursor9.close()
+                self.conexion = mysql.connector.connect(host="localhost", 
+                                                        user="root", 
+                                                        password="", 
+                                                        database="libreria")
 
-                print("*----------------------------------------------------------------*")
-                print("******************************************************************")
-                print("**************** La Bodega ha sido eliminada *******************")
-                print("******************************************************************")
-                print("*----------------------------------------------------------------*")
+                cursor9 = self.conexion.cursor()
+
+                consulta6 = f"""SELECT * FROM producto_bodega WHERE cod_bodega = '{codigo_bodega}'"""
+                cursor9.execute(consulta6)
+                resultados2 = cursor9.fetchone()
+
+                if resultados2:
+
+                    print("*----------------------------------------------------------------*")
+                    print("******************************************************************")
+                    print("******** No ha sido posible eliminar la bodega ingresada *********")
+                    print("******************************************************************")
+                    print("*----------------------------------------------------------------*")
+
+
+                else:
+
+                    self.conexion = mysql.connector.connect(host="localhost", 
+                                                            user="root", 
+                                                            password="", 
+                                                            database="libreria")
+
+                    cursor9 = self.conexion.cursor()
+                    consulta6 = f"""DELETE FROM bodega WHERE cod_bodega = '{codigo_bodega}'"""
+                    cursor9.execute(consulta6)
+                    self.conexion.commit()
+                    cursor9.close()
+
+                    print("*----------------------------------------------------------------*")
+                    print("******************************************************************")
+                    print("*********** ¡La Bodega ha sido eliminada exitosamente! ***********")
+                    print("******************************************************************")
+                    print("*----------------------------------------------------------------*")                    
+
 
             else:
 
                 print("*----------------------------------------------------------------*")
                 print("******************************************************************")
-                print("**************** La Bodega ingresada no existe *******************")
+                print("********* El codigo ingresado no pertenece a una bodega **********")
                 print("******************************************************************")
                 print("*----------------------------------------------------------------*")
-
-
-            print("*----------------------------------------------------------------*")
-            print("******************************************************************")
-            print("*********** ¡La Bodega ha sido eliminada exitosamente! ***********")
-            print("******************************************************************")
-            print("*----------------------------------------------------------------*")
 
         else:
             print("*----------------------------------------------------------------*")
@@ -357,6 +387,13 @@ while True:
         print("** La opcion ingresada no esta disponible **")
         print("********************************************")
         print("*------------------------------------------*")
+
+
+
+
+        
+
+
 
 
 
