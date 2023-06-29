@@ -32,9 +32,11 @@ cod_producto int not null auto_increment,
 nombre varchar(50),
 cod_tipo_producto int,
 cod_editorial int,
+cod_autor int,
 primary key (cod_producto),
 foreign key (cod_tipo_producto) references tipo_producto(cod_tipo_producto),
-foreign key (cod_editorial) references editorial(cod_editorial)
+foreign key (cod_editorial) references editorial(cod_editorial),
+foreign key (cod_autor) references autor(cod_autor)
 );
 
 
