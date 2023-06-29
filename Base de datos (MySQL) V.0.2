@@ -95,27 +95,18 @@ foreign key (bodega_destino) references bodega(cod_bodega)
 
 -- Llenar la tabla "usuario"
 INSERT INTO usuario (nombre, contraseña, cargo) VALUES
-  ('Matias Sepulveda', '123456', 'Jefe de bodega'),
+  ('Matias Sepulveda', '123456', 'Jefe de Bodega'),
   ('Bryan Barela', '12345', 'Bodeguero'),
   ('Fabian Rivera', '1234', 'Bodeguero');
 
 -- Llenar la tabla "autor"
-INSERT INTO autor (nombre) VALUES
-  ('J.K. Rowling'),
-  ('J.K. Rowling'),
-  ('J.K. Rowling');
+INSERT INTO autor (nombre) VALUES('J.K. Rowling');
 
 -- Llenar la tabla "editorial"
-INSERT INTO editorial (nombre_editorial) VALUES
-  ('Salamandra'),
-  ('Salamandra'),
-  ('Salamandra');
+INSERT INTO editorial (nombre_editorial) VALUES('Salamandra');
 
 -- Llenar la tabla "tipo_producto"
-INSERT INTO tipo_producto (nombre_tipo) VALUES
-  ('Libro'),
-  ('Revista'),
-  ('Enciclopedia');
+INSERT INTO tipo_producto (nombre_tipo) VALUES('Libro'),('Revista'),('Enciclopedia');
 
 -- Llenar la tabla "producto"
 INSERT INTO producto (nombre, cod_tipo_producto, cod_editorial) VALUES
