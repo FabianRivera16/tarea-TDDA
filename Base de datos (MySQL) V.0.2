@@ -1,6 +1,8 @@
 CREATE DATABASE LIBRERIA;
 USE LIBRERIA;
 
+
+
 CREATE TABLE usuario(
 id_usuario int not null auto_increment,
 nombre varchar(50),
@@ -36,7 +38,7 @@ cod_autor int,
 primary key (cod_producto),
 foreign key (cod_tipo_producto) references tipo_producto(cod_tipo_producto),
 foreign key (cod_editorial) references editorial(cod_editorial),
-foreign key (cod_autor) references autor(cod_autor)
+foreign key (cod_autor) references autor (cod_autor)
 );
 
 
@@ -97,24 +99,33 @@ foreign key (bodega_destino) references bodega(cod_bodega)
 
 -- Llenar la tabla "usuario"
 INSERT INTO usuario (nombre, contraseña, cargo) VALUES
-  ('Matias Sepulveda', '123456', 'Jefe de Bodega'),
+  ('Matias Sepulveda', '123456', 'Jefe de bodega'),
   ('Bryan Barela', '12345', 'Bodeguero'),
   ('Fabian Rivera', '1234', 'Bodeguero');
 
 -- Llenar la tabla "autor"
-INSERT INTO autor (nombre) VALUES('J.K. Rowling');
+INSERT INTO autor (nombre) VALUES
+  ('James Dashner'),
+  ('J.K Rowling');
 
+select * from autor;
 -- Llenar la tabla "editorial"
-INSERT INTO editorial (nombre_editorial) VALUES('Salamandra');
-
+INSERT INTO editorial (nombre_editorial) VALUES
+  ('Salamandra'),
+  ('Vyar');
+  
+select * from editorial;
 -- Llenar la tabla "tipo_producto"
-INSERT INTO tipo_producto (nombre_tipo) VALUES('Libro'),('Revista'),('Enciclopedia');
-
+INSERT INTO tipo_producto (nombre_tipo) VALUES
+  ('Libro'),
+  ('Revista'),
+  ('Enciclopedia');
+select * from tipo_producto;
 -- Llenar la tabla "producto"
-INSERT INTO producto (nombre, cod_tipo_producto, cod_editorial) VALUES
-  ('Harry Potter y la piedra filosofal', 1, 1),
-  ('Harry Potter y la cámara secreta', 1, 1),
-  ('Harry Potter y el prisionero de Azkaban', 1, 1);
+INSERT INTO producto (nombre, cod_tipo_producto, cod_editorial,cod_autor) VALUES
+  ('Harry Potter y la piedra filosofal', 1, 2,2),
+  ('Harry Potter y la cámara secreta', 1, 2,2),
+  ('Harry Potter y el prisionero de Azkaban', 1, 2,2);
 
 -- Llenar la tabla "producto_usuario"
 INSERT INTO producto_usuario (cod_producto, id_usuario) VALUES
@@ -145,3 +156,5 @@ INSERT INTO movimiento (bodega_origen, bodega_destino, producto, cantidad, tipo_
   (1, 2, 'Harry Potter y la piedra filosofal', 10, 'Traslado', 1),
   (2, 3, 'Harry Potter y la cámara secreta', 5, 'Traslado', 2),
   (3, 1, 'Harry Potter y el prisionero de Azkaban', 8, 'Traslado', 3);
+
+
