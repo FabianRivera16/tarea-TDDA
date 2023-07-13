@@ -6,35 +6,35 @@ import mysql.connector
 
 def menuSistema():
 
-    print("*----------------------------------------*")
-    print("******************************************")
-    print("************** El Gran Poeta *************")
-    print("******************************************")
-    print("** 1) Agregar Producto en una Bodega *****")
-    print("** 2) Eliminar Producto de una Bodega ****")
-    print("** 3) Crear Producto *********************")
-    print("** 4) Crear Bodega ***********************")
-    print("** 5) Eliminar Producto ******************")
-    print("** 6) Eliminar Bodega ********************")
-    print("** 7) Eliminar Editorial *****************")
-    print("** 8) Eliminar Autor *********************")
-    print("** 0) Salir del Sistema ******************")
-    print("******************************************")
-    print("*----------------------------------------*")
+    print("*------------------------------------*")
+    print("**************************************")
+    print("************ El Gran Poeta ***********")
+    print("**************************************")
+    print("* 1) Agregar Producto en una Bodega **")
+    print("* 2) Eliminar Producto de una Bodega *")
+    print("* 3) Crear Producto ******************")
+    print("* 4) Crear Bodega ********************")
+    print("* 5) Eliminar Producto ***************")
+    print("* 6) Eliminar Bodega *****************")
+    print("* 7) Eliminar Editorial **************")
+    print("* 8) Eliminar Autor ******************")
+    print("* 0) Salir del Sistema ***************")
+    print("**************************************")
+    print("*------------------------------------*")
 
-# Creacion de la interfaz del menú "Login".
+# Creacion de la interfaz del menú "Log-in".
 
 def menuLogin():
 
-    print("*--------------------------------------*")
-    print("****************************************")
-    print("***************** Log-in ***************")
-    print("****************************************")
-    print("** 1) Iniciar sesion en el sistema *****")
-    print("** 2) Restablecer contraseña ***********")
-    print("** 0) Salir el sistema *****************")
-    print("****************************************")
-    print("*--------------------------------------*")
+    print("*------------------------------------*")
+    print("**************************************")
+    print("**************** Log-in **************")
+    print("**************************************")
+    print("** 1) Iniciar sesion en el sistema ***")
+    print("** 2) Modificar contraseña ***********")
+    print("** 0) Salir el sistema ***************")
+    print("**************************************")
+    print("*------------------------------------*")
 
 # Creacion de la clase "Login".
 
@@ -60,11 +60,11 @@ class Login:
         
             cursor1 = self.conexion.cursor()
 
-            print("*--------------------------------------*")
-            print("****************************************")
-            print("*********** Inicio de Sesion ***********")
-            print("****************************************")
-            print("*--------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("********* Inicio de Sesion ***********")
+            print("**************************************")
+            print("*------------------------------------*")
 
             nombre_usuario = input("Ingrese su nombre de usuario: ")
             consulta1 = f"""SELECT nombre FROM usuario WHERE nombre = '{nombre_usuario}'"""
@@ -80,12 +80,12 @@ class Login:
                 
                 cursorr = self.conexion.cursor()
 
-                print("----------------------------------------")
-                print("****************************************")
-                print("** El nombre de usuario ingresado se ***")
-                print("****** encuentra en el sistema *********")
-                print("****************************************")
-                print("----------------------------------------")
+                print("*------------------------------------*")
+                print("**************************************")
+                print("* El nombre de usuario ingresado se **")
+                print("****** encuentra en el sistema *******")
+                print("**************************************")
+                print("*------------------------------------*")
 
                 contrasena = input("Ingrese su contraseña: ")
                 consulta2 = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
@@ -94,11 +94,12 @@ class Login:
 
                 if contrasena in resultado2:
 
-                    print("*----------------------------------------*")
-                    print("******************************************")
-                    print("* ¡Ha ingresado exitosamente al sistema! *")
-                    print("******************************************")
-                    print("*----------------------------------------*")
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("**** ¡Ha ingresado exitosamente  *****")
+                    print("************ al sistema! *************")
+                    print("**************************************")
+                    print("*------------------------------------*")
 
                     self.usuario = nombre_usuario
 
@@ -140,18 +141,20 @@ class Login:
 
                         else:
 
-                            print("*----------------------------------------*")
-                            print("******************************************")
-                            print("* La opcion ingresada no esta disponible *")
-                            print("******************************************")
-                            print("*----------------------------------------*")
+                            print("*------------------------------------*")
+                            print("**************************************")
+                            print("***** La opcion ingresada no esta ****")
+                            print("************** disponible ************")
+                            print("**************************************")
+                            print("*------------------------------------*")
 
                 else:
-                    print("*-----------------------------------------*")
-                    print("*******************************************")
-                    print("** La contraseña ingresada es incorrecta **")
-                    print("*******************************************")
-                    print("*-----------------------------------------*")
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("***** La contraseña ingresada es  ****")
+                    print("************* incorrecta *************")
+                    print("**************************************")
+                    print("*------------------------------------*")
 
             else:
                 print("EL nombre de usuario ingresado no se encuentra en el sistema.")
@@ -166,11 +169,11 @@ class Login:
         
         cursor2 = self.conexion.cursor()
 
-        print("*--------------------------------------*")
-        print("****************************************")
-        print("******** Restablecer Contraseña ********")
-        print("****************************************")
-        print("*--------------------------------------*")
+        print("*------------------------------------*")
+        print("**************************************")
+        print("******** Modificar Contraseña ********")
+        print("**************************************")
+        print("*------------------------------------*")
 
         nombre_usuario = input("Ingrese su nombre de usuario: ")
         consulta1 = f"""SELECT nombre FROM usuario WHERE nombre = '{nombre_usuario}'"""
@@ -186,12 +189,12 @@ class Login:
                                                         password="", 
                                                         database="libreria")
                 
-                print("*--------------------------------------*")
-                print("****************************************")
-                print("**** Se ha encontrado el nombre de  ****")
-                print("********* usuario en el sistema ********")
-                print("****************************************")
-                print("*--------------------------------------*")
+                print("*------------------------------------*")
+                print("**************************************")
+                print("*** Se ha encontrado el nombre de  ***")
+                print("******** usuario en el sistema *******")
+                print("**************************************")
+                print("*------------------------------------*")
                 
                 cursor5 = self.conexion.cursor()
                 consulta3 = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
@@ -210,12 +213,12 @@ class Login:
             
                         cursor4 = self.conexion.cursor()
 
-                        print("*--------------------------------------*")
-                        print("****************************************")
-                        print("******** La contraseña ingresada *******")
-                        print("************** es correcta *************")
-                        print("****************************************")
-                        print("*--------------------------------------*")
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("******* La contraseña ingresada ******")
+                        print("************* es correcta ************")
+                        print("**************************************")
+                        print("*------------------------------------*")
 
                         nueva_contrasena = input("Ingresa tu nueva contraseña: ")
                         consultaad = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
@@ -224,12 +227,12 @@ class Login:
 
                         if nueva_contrasena in resultado3:
 
-                            print("*-------------------------------------*")
-                            print("***************************************")
-                            print("*** La contraseña no ha podido ser  ***")
-                            print("************* modificada **************")
-                            print("***************************************")
-                            print("*-------------------------------------*")
+                            print("*------------------------------------*")
+                            print("**************************************")
+                            print("*** La contraseña no ha podido ser  **")
+                            print("************* modificada *************")
+                            print("**************************************")
+                            print("*------------------------------------*")
 
                         else:
 
@@ -244,52 +247,49 @@ class Login:
                             self.conexion.commit()
                             cursor3.close()
 
-                            print("*--------------------------------------*")
-                            print("****************************************")
-                            print("**** ¡La contraseña se ha cambiado  ****")
-                            print("************ exitosamente! *************")
-                            print("****************************************")
-                            print("*--------------------------------------*")
+                            print("*------------------------------------*")
+                            print("**************************************")
+                            print("*** ¡La contraseña se ha cambiado  ***")
+                            print("*********** exitosamente! ************")
+                            print("**************************************")
+                            print("*------------------------------------*")
 
                     else:
 
-                        print("*--------------------------------------*")
-                        print("****************************************")
-                        print("****** La contraseña ingresada no  *****")
-                        print("************* es correcta **************")
-                        print("****************************************")
-                        print("*--------------------------------------*")
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("***** La contraseña ingresada no  ****")
+                        print("************ es correcta *************")
+                        print("**************************************")
+                        print("*------------------------------------*")
 
                 except:
 
-                    print("*----------------------------------*")
-                    print("************************************")
-                    print("**** La contraseña ingresada no  ***")
-                    print("*********** es correcta ************")
-                    print("************************************")
-                    print("*----------------------------------*")
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("***** La contraseña ingresada no  ****")
+                    print("************ es correcta *************")
+                    print("**************************************")
+                    print("*------------------------------------*")
 
             else:
-
-                print("*---------------------------------------*")
-                print("*****************************************")
-                print("* El nombre de usuario ingresado no se  *")
-                print("******** encuentra en el sistema ********")
-                print("*****************************************")
-                print("*---------------------------------------*")
+                print("*------------------------------------*")
+                print("**************************************")
+                print("*** El nombre de usuario ingresado ***")
+                print("******* no se encuentra en el  *******")
+                print("************** sistema ***************")
+                print("**************************************")
+                print("*------------------------------------*")
 
         except:
-
-            print("*---------------------------------------*")
-            print("*****************************************")
-            print("* El nombre de usuario ingresado no se  *")
-            print("******** encuentra en el sistema ********")
-            print("*****************************************")
-            print("*---------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("*** El nombre de usuario ingresado ***")
+            print("******* no se encuentra en el  *******")
+            print("************** sistema ***************")
+            print("**************************************")
+            print("*------------------------------------*")
                         
-
-
-
 class Libreria:
 
     def __init__(self):
@@ -313,11 +313,11 @@ class Libreria:
 
         if "Jefe de Bodega" in resultados:
 
-            print("*----------------------------------------------------------------*")
-            print("******************************************************************")
-            print("********************** Creacion de Bodegas ***********************")
-            print("******************************************************************")
-            print("*----------------------------------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("********* Creacion de Bodegas ********")
+            print("**************************************")
+            print("*------------------------------------*")
 
             cursor5 = self.conexion.cursor()
             nombre_bodega = input("Ingrese el nombre de la nueva bodega: ")
@@ -326,18 +326,20 @@ class Libreria:
             self.conexion.commit()
             cursor5.close()
 
-            print("*----------------------------------------------------------------*")
-            print("******************************************************************")
-            print("************ ¡La Bodega ha sido creada exitosamente! *************")
-            print("******************************************************************")
-            print("*----------------------------------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("***** ¡La Bodega ha sido creada  *****")
+            print("*********** exitosamente! ************")
+            print("**************************************")
+            print("*------------------------------------*")
 
         else:
-            print("*----------------------------------------------------------------*")
-            print("******************************************************************")
-            print("******* No tienes los permisos para utilizar esta funcion ********")
-            print("******************************************************************")
-            print("*----------------------------------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("**** No tienes los permisos para  ****")
+            print("******** utilizar esta funcion *******")
+            print("**************************************")
+            print("*------------------------------------*")  
 
     def crearProducto(self):
 
@@ -358,11 +360,11 @@ class Libreria:
                                                     password="", 
                                                     database="libreria")
 
-            print("*----------------------------------------*")
-            print("******************************************")
-            print("************ Crear Producto **************")
-            print("******************************************")
-            print("*----------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("*********** Crear Producto ***********")
+            print("**************************************")
+            print("*------------------------------------*")
 
             cursor2 = self.conexion.cursor()
             nombre_producto = input("Ingrese el nombre del nuevo producto: ")
@@ -370,12 +372,12 @@ class Libreria:
             cursor2.execute(consulta2)
             resultados1 = cursor2.fetchall()
 
-            print("*------------------------------------------*")
+            print("*------------------------------------*")
 
             for i in resultados1:
                 print(i)
 
-            print("*------------------------------------------*")
+            print("*------------------------------------*")
 
             cod_tipo_producto = int(input("Ingrese el codigo del tipo de producto: "))
 
@@ -398,12 +400,12 @@ class Libreria:
                     cursor4.execute(consulta4)
                     resultados3 = cursor4.fetchall()
 
-                    print("*------------------------------------------*")
+                    print("*------------------------------------*")
 
                     for i in resultados3:
                         print(i)
 
-                    print("*------------------------------------------*")
+                    print("*------------------------------------*")
 
                     cod_editorial = int(input("Ingrese el codigo de la editorial: "))
 
@@ -425,16 +427,16 @@ class Libreria:
                             cursor6.execute(consulta6)
                             resultados5 = cursor6.fetchall()
 
-                            print("*------------------------------------------*")
+                            print("*------------------------------------*")
 
                             for i in resultados5:
                                 print(i)
 
-                            print("*------------------------------------------*")
+                            print("*------------------------------------*")
 
                             cod_autor = int(input("Ingrese el codigo del autor: "))
 
-                            print("*------------------------------------------*")
+                            print("*------------------------------------*")
 
                             cursor7 = self.conexion.cursor()
                             consulta7 = f"""SELECT cod_autor FROM autor WHERE cod_autor = '{cod_autor}'"""
@@ -456,74 +458,75 @@ class Libreria:
                                     self.conexion.commit()
                                     cursor8.close()
 
-                                    print("-------------------------------------------")
-                                    print("*******************************************")
-                                    print("*** El producto fue creado exitosamente ***")
-                                    print("*******************************************")
-                                    print("-------------------------------------------")
+                                    print("*------------------------------------*")
+                                    print("**************************************")
+                                    print("******* El producto fue creado  ******")
+                                    print("************ exitosamente ************")
+                                    print("**************************************")
+                                    print("*------------------------------------*")
 
                                 else:
 
-                                    print("-------------------------------------------")
-                                    print("*******************************************")
-                                    print("*** El codigo ingresado no esta asociado **")
-                                    print("******** a ningun autor existente *********")
-                                    print("*******************************************")
-                                    print("-------------------------------------------")
+                                    print("*------------------------------------*")
+                                    print("**************************************")
+                                    print("**** El codigo ingresado no esta  ****")
+                                    print("****** asociado a ningun autor  ******")
+                                    print("************* existente **************")
+                                    print("**************************************")
+                                    print("*------------------------------------*")
 
                             except:
-                                    
-                                    print("-------------------------------------------")
-                                    print("*******************************************")
-                                    print("*** El codigo ingresado no esta asociado **")
-                                    print("******** a ningun autor existente *********")
-                                    print("*******************************************")
-                                    print("-------------------------------------------")
+                                print("*------------------------------------*")
+                                print("**************************************")
+                                print("**** El codigo ingresado no esta  ****")
+                                print("****** asociado a ningun autor  ******")
+                                print("************* existente **************")
+                                print("**************************************")
+                                print("*------------------------------------*")
 
                         else:
-
-                            print("-------------------------------------------")
-                            print("*******************************************")
-                            print("*** El codigo ingresado no esta asociado **")
-                            print("****** a ninguna editorial existente ******")
-                            print("*******************************************")
-                            print("-------------------------------------------")
+                            print("*------------------------------------*")
+                            print("**************************************")
+                            print("**** El codigo ingresado no esta  ****")
+                            print("***  asociado a ninguna editorial  ***")
+                            print("************** existente *************")
+                            print("**************************************")
+                            print("*------------------------------------*")
 
                     except:
-
-                        print("-------------------------------------------")
-                        print("*******************************************")
-                        print("*** El codigo ingresado no esta asociado **")
-                        print("****** a ninguna editorial existente ******")
-                        print("*******************************************")
-                        print("-------------------------------------------")
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("**** El codigo ingresado no esta  ****")
+                        print("***  asociado a ninguna editorial  ***")
+                        print("************** existente *************")
+                        print("**************************************")
+                        print("*------------------------------------*")
 
                 else:
-
-                    print("-------------------------------------------")
-                    print("*******************************************")
-                    print("*** El codigo ingresado no esta asociado **")
-                    print("******** a ningun tipo de producto ********")
-                    print("*******************************************")
-                    print("-------------------------------------------")
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("**** El codigo ingresado no esta  ****")
+                    print("******* asociado a ningun tipo *******")
+                    print("************ de producto *************")
+                    print("**************************************")
+                    print("*------------------------------------*")
 
             except:
-
-                print("-------------------------------------------")
-                print("*******************************************")
-                print("*** El codigo ingresado no esta asociado **")
-                print("******** a ningun tipo de producto ********")
-                print("*******************************************")
-                print("-------------------------------------------")
+                print("*------------------------------------*")
+                print("**************************************")
+                print("**** El codigo ingresado no esta  ****")
+                print("******* asociado a ningun tipo *******")
+                print("************ de producto *************")
+                print("**************************************")
+                print("*------------------------------------*")
 
         else:
-
-            print("*------------------------------------------*")
-            print("********************************************")
-            print("*** No tienes los permisos para utilizar ***")
-            print("************** esta funcion ****************")
-            print("********************************************")
-            print("*------------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("**** No tienes los permisos para  ****")
+            print("******** utilizar esta funcion *******")
+            print("**************************************")
+            print("*------------------------------------*")  
 
     def agregarProducto(self):
 
@@ -532,24 +535,24 @@ class Libreria:
                                                 password="", 
                                                 database="libreria")
         
-        print("*----------------------------------------*")
-        print("******************************************")
-        print("********* Agregar un Producto ************")
-        print("************* a una Bodega ***************")
-        print("******************************************")
-        print("*----------------------------------------*")
+        print("*------------------------------------*")
+        print("**************************************")
+        print("******* Agregar un Producto **********")
+        print("*********** a una Bodega *************")
+        print("**************************************")
+        print("*------------------------------------*")
 
         cursor1 = self.conexion.cursor()
         consulta1 = f"""SELECT * FROM producto"""
         cursor1.execute(consulta1)
         resultados1 = cursor1.fetchall()
 
-        print("*----------------------------------------*")
+        print("*------------------------------------*")
 
         for i in resultados1:
             print(i)
 
-        print("*----------------------------------------*")
+        print("*------------------------------------*")
 
         cod_producto = int(input("Ingrese el codigo del producto: "))
         cursor2 = self.conexion.cursor()
@@ -571,16 +574,16 @@ class Libreria:
                 cursor3.execute(consulta3)
                 resultados3 = cursor3.fetchall()
 
-                print("*----------------------------------------*")
+                print("*------------------------------------*")
 
                 for i in resultados3:
                     print(i)
 
-                print("*----------------------------------------*")
+                print("*------------------------------------*")
 
                 cod_bodega = int(input("Ingrese el codigo de la bodega: "))
 
-                print("*----------------------------------------*")
+                print("*------------------------------------*")
 
                 cursor4 = self.conexion.cursor()
                 consulta4 = f"""SELECT cod_bodega FROM bodega WHERE cod_bodega = '{cod_bodega}'"""
@@ -593,7 +596,7 @@ class Libreria:
                         
                         nuevo_stock = int(input("Ingrese el stock que tendra el producto: "))
 
-                        print("*----------------------------------------*")
+                        print("*------------------------------------*")
 
 
                         self.conexion = mysql.connector.connect(host="localhost", 
@@ -607,12 +610,12 @@ class Libreria:
                         self.conexion.commit()
                         cursor5.close()
 
-                        print("-------------------------------------------")
-                        print("*******************************************")
-                        print("**** ¡El producto ha sido agregado a una **")
-                        print("***************** bodega! *****************")
-                        print("*******************************************")
-                        print("-------------------------------------------")
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("*** ¡El producto ha sido agregado  ***")
+                        print("***********  a una bodega! ***********")
+                        print("**************************************")
+                        print("*------------------------------------*")
 
                         cursor8 = self.conexion.cursor()
                         consulta8 = f"""INSERT INTO movimiento(cod_producto, bodega_destino, tipo_movimiento, cantidad) VALUES('{cod_producto}', '{cod_bodega}', 'Translado','{nuevo_stock}')"""
@@ -620,51 +623,51 @@ class Libreria:
                         self.conexion.commit()
                         cursor8.close()
 
-                        print("-------------------------------------------")
-                        print("*******************************************")
-                        print("********* Documento de Movimiento *********")
-                        print("*******************************************")
-                        print(f"** Cod - Producto: {cod_producto} ********")
-                        print(f"** Cod - Bodega: {cod_bodega} ************")
-                        print(f"** Stock: {nuevo_stock} ******************")
-                        print(f"** Tipo de Movimiento: Translado *********")
-                        print("*******************************************")
-                        print("-------------------------------------------")
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("******* Documento de Movimiento ******")
+                        print("**************************************")
+                        print(f"** Cod-Producto: {cod_producto} *****")
+                        print(f"** Cod-Bodega: {cod_bodega} *********")
+                        print(f"** Stock: {nuevo_stock} *************")
+                        print(f"** Tipo de Movimiento: Translado ****")
+                        print("**************************************")
+                        print("*------------------------------------*")
                         
                     else:
-                        print("-------------------------------------------")
-                        print("*******************************************")
-                        print("*** El codigo ingresado no esta asociado **")
-                        print("************ a ninguna bodega *************")
-                        print("*******************************************")
-                        print("-------------------------------------------")
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("**** El codigo ingresado no esta  ****")
+                        print("***** asociado a ninguna bodega ******")
+                        print("**************************************")
+                        print("*------------------------------------*")
 
                 except:
 
-                    print("-------------------------------------------")
-                    print("*******************************************")
-                    print("*** El codigo ingresado no esta asociado **")
-                    print("************ a ninguna bodega *************")
-                    print("*******************************************")
-                    print("-------------------------------------------")
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("**** El codigo ingresado no esta  ****")
+                    print("***** asociado a ninguna bodega ******")
+                    print("**************************************")
+                    print("*------------------------------------*")
 
             else:
 
-                print("-------------------------------------------")
-                print("*******************************************")
-                print("*** El codigo ingresado no esta asociado **")
-                print("************ a ningun producto ************")
-                print("*******************************************")
-                print("-------------------------------------------")
+                print("*------------------------------------*")
+                print("**************************************")
+                print("**** El codigo ingresado no esta  ****")
+                print("***** asociado a ningun producto *****")
+                print("**************************************")
+                print("*------------------------------------*")
         
         except:
 
-            print("-------------------------------------------")
-            print("*******************************************")
-            print("*** El codigo ingresado no esta asociado **")
-            print("************ a ningun producto ************")
-            print("*******************************************")
-            print("-------------------------------------------")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("**** El codigo ingresado no esta  ****")
+            print("***** asociado a ningun producto *****")
+            print("**************************************")
+            print("*------------------------------------*")
         
 
 
@@ -675,24 +678,24 @@ class Libreria:
                                                 password="", 
                                                 database="libreria")
         
-        print("*----------------------------------------*")
-        print("******************************************")
-        print("********** Quitar un Producto ************")
-        print("************* de una Bodega **************")
-        print("******************************************")
-        print("*----------------------------------------*")
+        print("*-------------------------------------*")
+        print("**************************************")
+        print("********* Quitar un Producto *********")
+        print("*********** de una Bodega ************")
+        print("**************************************")
+        print("*------------------------------------*")
         
         cursor1 = self.conexion.cursor()
         consulta1 = f"""SELECT * FROM producto"""
         cursor1.execute(consulta1)
         resultados1 = cursor1.fetchall()
 
-        print("*----------------------------------------*")
+        print("*------------------------------------*")
 
         for i in resultados1:
             print(i)
 
-        print("*----------------------------------------*")
+        print("*------------------------------------*")
 
         cod_producto = int(input("Ingrese el codigo del producto: "))
         cursor2 = self.conexion.cursor()
@@ -714,16 +717,16 @@ class Libreria:
                 cursor3.execute(consulta3)
                 resultados3 = cursor3.fetchall()
 
-                print("*----------------------------------------*")
+                print("*------------------------------------*")
 
                 for i in resultados3:
                     print(i)
 
-                print("*----------------------------------------*")
+                print("*------------------------------------*")
 
                 cod_bodega = int(input("Ingrese el codigo de la bodega: "))
 
-                print("*----------------------------------------*")
+                print("*------------------------------------*")
 
                 cursor4 = self.conexion.cursor()
                 consulta4 = f"""SELECT cod_bodega FROM bodega WHERE cod_bodega = '{cod_bodega}'"""
@@ -745,47 +748,46 @@ class Libreria:
                         self.conexion.commit()
                         cursor5.close()
 
-                        print("-------------------------------------------")
-                        print("*******************************************")
-                        print("**** ¡El producto ha sido eliminado de ****")
-                        print("*************** la bodega! ****************")
-                        print("*******************************************")
-                        print("-------------------------------------------")
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("** ¡El producto ha sido eliminado de *")
+                        print("************* la bodega! *************")
+                        print("**************************************")
+                        print("*------------------------------------*")
 
                     else:
-                        print("-------------------------------------------")
-                        print("*******************************************")
-                        print("*** El codigo ingresado no esta asociado **")
-                        print("************ a ninguna bodega *************")
-                        print("*******************************************")
-                        print("-------------------------------------------")
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("**** El codigo ingresado no esta  ****")
+                        print("***** asociado a ninguna bodega ******")
+                        print("**************************************")
+                        print("*------------------------------------*")
 
                 except:
 
-                    print("-------------------------------------------")
-                    print("*******************************************")
-                    print("*** El codigo ingresado no esta asociado **")
-                    print("************ a ninguna bodega *************")
-                    print("*******************************************")
-                    print("-------------------------------------------")
-
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("**** El codigo ingresado no esta  ****")
+                    print("***** asociado a ninguna bodega ******")
+                    print("**************************************")
+                    print("*------------------------------------*")
             else:
 
-                print("-------------------------------------------")
-                print("*******************************************")
-                print("*** El codigo ingresado no esta asociado **")
-                print("************ a ningun producto ************")
-                print("*******************************************")
-                print("-------------------------------------------")
+                print("*------------------------------------*")
+                print("**************************************")
+                print("**** El codigo ingresado no esta  ****")
+                print("***** asociado a ningun producto *****")
+                print("**************************************")
+                print("*------------------------------------*")
         
         except:
 
-            print("-------------------------------------------")
-            print("*******************************************")
-            print("*** El codigo ingresado no esta asociado **")
-            print("************ a ningun producto ************")
-            print("*******************************************")
-            print("-------------------------------------------")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("**** El codigo ingresado no esta  ****")
+            print("***** asociado a ningun producto *****")
+            print("**************************************")
+            print("*------------------------------------*")
 
     def eliminarBodega(self):
 
@@ -807,11 +809,11 @@ class Libreria:
                                                     password="", 
                                                     database="libreria")
 
-            print("*-------------------------------------------------*")
-            print("***************************************************")
-            print("************** Eliminar una Bodega ****************")
-            print("***************************************************")
-            print("*-------------------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("******** Eliminar una Bodega *********")
+            print("**************************************")
+            print("*------------------------------------*")
 
             cursor8 = self.conexion.cursor()
 
@@ -837,11 +839,12 @@ class Libreria:
 
                     if resultados2:
 
-                        print("*----------------------------------------------------------------*")
-                        print("******************************************************************")
-                        print("******** No ha sido posible eliminar la bodega ingresada *********")
-                        print("******************************************************************")
-                        print("*----------------------------------------------------------------*")
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("**** No ha sido posible eliminar  ****")
+                        print("******** la bodega ingresada *********")
+                        print("**************************************")
+                        print("*------------------------------------*")
 
                     else:
 
@@ -856,35 +859,36 @@ class Libreria:
                         self.conexion.commit()
                         cursor9.close()
 
-                        print("*----------------------------------------------------------------*")
-                        print("******************************************************************")
-                        print("*********** ¡La Bodega ha sido eliminada exitosamente! ***********")
-                        print("******************************************************************")
-                        print("*----------------------------------------------------------------*")                    
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("** ¡La Bodega ha sido eliminada  *****")
+                        print("*********** exitosamente! ************")
+                        print("**************************************")
+                        print("*------------------------------------*")                    
 
                 else:
-
-                    print("*----------------------------------------------------------------*")
-                    print("******************************************************************")
-                    print("********* El codigo ingresado no pertenece a una bodega **********")
-                    print("******************************************************************")
-                    print("*----------------------------------------------------------------*")
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("** El codigo ingresado no pertenece  *")
+                    print("************ a una bodega ************")
+                    print("**************************************")
+                    print("*------------------------------------*")
 
             except:
-
-                print("*----------------------------------------------------------------*")
-                print("******************************************************************")
-                print("********* El codigo ingresado no pertenece a una bodega **********")
-                print("******************************************************************")
-                print("*----------------------------------------------------------------*")
+                print("*------------------------------------*")
+                print("**************************************")
+                print("** El codigo ingresado no pertenece  *")
+                print("************ a una bodega ************")
+                print("**************************************")
+                print("*------------------------------------*")
 
         else:
-
-            print("*----------------------------------------------------------------*")
-            print("******************************************************************")
-            print("******* No tienes los permisos para utilizar esta funcion ********")
-            print("******************************************************************")
-            print("*----------------------------------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("**** No tienes los permisos para  ****")
+            print("******** utilizar esta funcion *******")
+            print("**************************************")
+            print("*------------------------------------*")  
 
     def eliminarAutor(self):
 
@@ -900,11 +904,11 @@ class Libreria:
 
         if "Jefe de Bodega" in resultado2:
 
-            print("*-----------------------------------------*")
-            print("*******************************************")
-            print("************ Eliminar un Autor ************")
-            print("*******************************************")
-            print("*-----------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("********** Eliminar un Autor *********")
+            print("**************************************")
+            print("*------------------------------------*")
             
             cursor9 = self.conexion.cursor()
             consultag = f"""SELECT * FROM autor"""
@@ -940,12 +944,12 @@ class Libreria:
 
                     if resultados2:
 
-                        print("*--------------------------------------------------*")
-                        print("****************************************************")
-                        print("*********** El autor no ha podido ser **************")
-                        print("******************* eliminado **********************")
-                        print("****************************************************")
-                        print("*--------------------------------------------------*")    
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("****** El autor no ha podido ser *****")
+                        print("*************** eliminado ************")
+                        print("**************************************")
+                        print("*------------------------------------*") 
 
                     else:
 
@@ -955,37 +959,38 @@ class Libreria:
                         self.conexion.commit()
                         cursor10.close()
 
-                        print("*------------------------------------------*")
-                        print("********************************************")
-                        print("******** El autor ha sido eliminado ********")
-                        print("********************************************")
-                        print("*------------------------------------------*")    
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("***** El autor ha sido eliminado *****")
+                        print("**************************************")
+                        print("*------------------------------------*")    
                 
                 else:
-                    print("*--------------------------------------------------*")
-                    print("****************************************************")
-                    print("******* El codigo ingresado no esta asociado *******")
-                    print("************ a ningun autor existente **************")
-                    print("****************************************************")
-                    print("*--------------------------------------------------*")
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("**** El codigo ingresado no esta  ****")
+                    print("****** asociado a ningun autor  ******")
+                    print("************* existente **************")
+                    print("**************************************")
+                    print("*------------------------------------*")
 
             except:
+                print("*------------------------------------*")
+                print("**************************************")
+                print("**** El codigo ingresado no esta  ****")
+                print("****** asociado a ningun autor  ******")
+                print("************* existente **************")
+                print("**************************************")
+                print("*------------------------------------*")
 
-                print("*--------------------------------------------------*")
-                print("****************************************************")
-                print("******* El codigo ingresado no esta asociado *******")
-                print("************ a ningun autor existente **************")
-                print("****************************************************")
-                print("*--------------------------------------------------*")
         else:
-
-            print("*----------------------------------------------------------------*")
-            print("******************************************************************")
-            print("******* No tienes los permisos para utilizar esta funcion ********")
-            print("******************************************************************")
-            print("*----------------------------------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("**** No tienes los permisos para  ****")
+            print("******** utilizar esta funcion *******")
+            print("**************************************")
+            print("*------------------------------------*")  
           
-
     def eliminarEditorial(self):
         
         self.conexion = mysql.connector.connect(host="localhost", 
@@ -1005,11 +1010,11 @@ class Libreria:
                                                     password="", 
                                                     database="libreria")
 
-            print("*----------------------------------------------------------------*")
-            print("******************************************************************")
-            print("******************* Eliminar una Editorial ***********************")
-            print("******************************************************************")
-            print("*----------------------------------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("******* Eliminar una Editorial *******")
+            print("**************************************")
+            print("*------------------------------------*")
             
             cursor15 = self.conexion.cursor()
             consultag = f"""SELECT * FROM editorial"""
@@ -1019,7 +1024,7 @@ class Libreria:
             for i in resultadog:
                 print(i)
 
-            print("*----------------------------------------------------------------*")
+            print("*------------------------------------*")
 
             cursor14 = self.conexion.cursor()
 
@@ -1044,50 +1049,51 @@ class Libreria:
 
                     if resultados3:
 
-                        print("*--------------------------------------------------*")
-                        print("****************************************************")
-                        print("********** La editorial no ha podido ser ***********")
-                        print("******************* eliminada **********************")
-                        print("****************************************************")
-                        print("*--------------------------------------------------*")    
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("*** La editorial no ha podido ser ****")
+                        print("************* eliminada **************")
+                        print("**************************************")
+                        print("*------------------------------------*")    
 
                     else:
-
                         cursor16 = self.conexion.cursor()
                         consulta3 = f"""DELETE FROM editorial WHERE cod_editorial = {codigo_editorial}"""
                         cursor16.execute(consulta3)
                         self.conexion.commit()
                         cursor16.close()
 
-                        print("*---------------------------------------------------*")
-                        print("*****************************************************")
-                        print("********** La editorial ha sido eliminada ***********")
-                        print("*****************************************************")
-                        print("*---------------------------------------------------*")    
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("*** La editorial ha sido eliminada ***")
+                        print("**************************************")
+                        print("*------------------------------------*")    
                 
                 else:
-                    print("*--------------------------------------------------*")
-                    print("****************************************************")
-                    print("******* El codigo ingresado no esta asociado *******")
-                    print("********** a ninguna editorial existente ***********")
-                    print("****************************************************")
-                    print("*--------------------------------------------------*")  
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("**** El codigo ingresado no esta  ****")
+                    print("***  asociado a ninguna editorial  ***")
+                    print("************** existente *************")
+                    print("**************************************")
+                    print("*------------------------------------*")
 
             except:
-
-                print("*--------------------------------------------------*")
-                print("****************************************************")
-                print("******* El codigo ingresado no esta asociado *******")
-                print("********** a ninguna editorial existente ***********")
-                print("****************************************************")
-                print("*--------------------------------------------------*")  
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("**** El codigo ingresado no esta  ****")
+                    print("***  asociado a ninguna editorial  ***")
+                    print("************** existente *************")
+                    print("**************************************")
+                    print("*------------------------------------*")
 
         else:
-                print("*----------------------------------------------------------*")
-                print("***********************************************************")
-                print("**** No tienes los permisos para utilizar esta funcion ****")
-                print("***********************************************************")
-                print("*---------------------------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("**** No tienes los permisos para  ****")
+            print("******** utilizar esta funcion *******")
+            print("**************************************")
+            print("*------------------------------------*")
 
     def eliminarProducto(self):
         self.conexion = mysql.connector.connect(host="localhost", 
@@ -1102,11 +1108,11 @@ class Libreria:
 
         if "Jefe de Bodega" in resultado3:
 
-            print("*----------------------------------------------------------------*")
-            print("******************************************************************")
-            print("********************** Eliminar Producto *************************")
-            print("******************************************************************")
-            print("*----------------------------------------------------------------*")
+            print("*------------------------------------*")
+            print("**************************************")
+            print("********** Eliminar Producto *********")
+            print("**************************************")
+            print("*------------------------------------*")
 
             cursor15 = self.conexion.cursor()
             consulta5 = f"""SELECT * FROM producto"""
@@ -1136,36 +1142,39 @@ class Libreria:
                     self.conexion.commit()
                     cursor13.close()
 
-                    print("*----------------------------------------------------------------*")
-                    print("******************************************************************")
-                    print("**************** El producto ha sido eliminado *******************")
-                    print("******************************************************************")
-                    print("*----------------------------------------------------------------*")
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("***  El producto ha sido eliminado ***")
+                    print("**************************************")
+                    print("*------------------------------------*")
 
                 else:
 
-                    print("*--------------------------------------------------*")
-                    print("****************************************************")
-                    print("******* El codigo ingresado no esta asociado *******")
-                    print("*********** a ningun producto existente ************")
-                    print("****************************************************")
-                    print("*--------------------------------------------------*")  
+                    print("*------------------------------------*")
+                    print("**************************************")
+                    print("**** El codigo ingresado no esta  ****")
+                    print("****  asociado a ningun producto  ****")
+                    print("************** existente *************")
+                    print("**************************************")
+                    print("*------------------------------------*")
 
             except:
 
-                print("*--------------------------------------------------*")
-                print("****************************************************")
-                print("******* El codigo ingresado no esta asociado *******")
-                print("*********** a ningun producto existente ************")
-                print("****************************************************")
-                print("*--------------------------------------------------*")
+                print("*------------------------------------*")
+                print("**************************************")
+                print("**** El codigo ingresado no esta  ****")
+                print("****  asociado a ningun producto  ****")
+                print("************** existente *************")
+                print("**************************************")
+                print("*------------------------------------*")
 
         else:
-            print("*----------------------------------------------------------*")
-            print("***********************************************************")
-            print("**** No tienes los permisos para utilizar esta funcion ****")
-            print("***********************************************************")
-            print("*---------------------------------------------------------*")  
+            print("*------------------------------------*")
+            print("**************************************")
+            print("**** No tienes los permisos para  ****")
+            print("******** utilizar esta funcion *******")
+            print("**************************************")
+            print("*------------------------------------*")  
 
 # Creacion de objeto de la clase "Login".
 
@@ -1189,22 +1198,35 @@ while True:
 
     elif opmenu == "0":
 
-        print("*----------------------------------------*")
-        print("******************************************")
-        print("*** El sistema se ha cerrado con exito ***")
-        print("******************************************")
-        print("*----------------------------------------*")
+        print("*-------------------------------------*")
+        print("***************************************")
+        print("* El sistema se ha cerrado con exito **")
+        print("***************************************")
+        print("*-------------------------------------*")
         
         break
 
     else:
 
-        print("*--------------------------------*")
-        print("**********************************")
-        print("** La opcion ingresada no esta  **")
-        print("************ disponible **********")
-        print("**********************************")
-        print("*--------------------------------*")
+        print("*-------------------------------------*")
+        print("***************************************")
+        print("**** La opcion ingresada no esta  *****")
+        print("************** disponible *************")
+        print("***************************************")
+        print("*-------------------------------------*")
+
+# Fin del Programa Principal
+
+
+# El programa presentado ha sido desarrollado por Fabian Rivera, Bryan Varela y Matias Sepulveda.
+
+
+
+
+        
+
+
+
 
 
 
