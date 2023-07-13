@@ -18,6 +18,7 @@ def menuSistema():
     print("* 6) Eliminar Bodega *****************")
     print("* 7) Eliminar Editorial **************")
     print("* 8) Eliminar Autor ******************")
+    print("* 9) Visualizar Informes *************")
     print("* 0) Salir del Sistema ***************")
     print("**************************************")
     print("*------------------------------------*")
@@ -70,95 +71,117 @@ class Login:
             consulta1 = f"""SELECT nombre FROM usuario WHERE nombre = '{nombre_usuario}'"""
             cursor1.execute(consulta1)
             resultado1 = cursor1.fetchone()
+            
+            try:
 
-            if nombre_usuario in resultado1:
+                if nombre_usuario in resultado1:
                 
-                self.conexion = mysql.connector.connect(host="localhost", 
-                                                        user="root", 
-                                                        password="", 
-                                                        database="libreria")
+                    self.conexion = mysql.connector.connect(host="localhost", 
+                                                            user="root", 
+                                                            password="", 
+                                                            database="libreria")
                 
-                cursorr = self.conexion.cursor()
-
-                print("*------------------------------------*")
-                print("**************************************")
-                print("* El nombre de usuario ingresado se **")
-                print("****** encuentra en el sistema *******")
-                print("**************************************")
-                print("*------------------------------------*")
-
-                contrasena = input("Ingrese su contraseña: ")
-                consulta2 = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
-                cursorr.execute(consulta2)
-                resultado2 = cursorr.fetchone()
-
-                if contrasena in resultado2:
+                    cursorr = self.conexion.cursor()
 
                     print("*------------------------------------*")
                     print("**************************************")
-                    print("**** ¡Ha ingresado exitosamente  *****")
-                    print("************ al sistema! *************")
+                    print("* El nombre de usuario ingresado se **")
+                    print("****** encuentra en el sistema *******")
                     print("**************************************")
                     print("*------------------------------------*")
 
-                    self.usuario = nombre_usuario
+                    contrasena = input("Ingrese su contraseña: ")
+                    consulta2 = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
+                    cursorr.execute(consulta2)
+                    resultado2 = cursorr.fetchone()
+                    
+                    try:
 
-                    libreria1 = Libreria()
+                        if contrasena in resultado2:
 
-                    while True:
+                            print("*------------------------------------*")
+                            print("**************************************")
+                            print("**** ¡Ha ingresado exitosamente  *****")
+                            print("************ al sistema! *************")
+                            print("**************************************")
+                            print("*------------------------------------*")
 
-                        menuSistema()
+                            self.usuario = nombre_usuario
 
-                        opcions = input("Ingrese una de las siguiente opciones: ")
+                            libreria1 = Libreria()
 
-                        if opcions == "1":
-                            libreria1.agregarProducto()
+                            while True:
 
-                        elif opcions == "2":
-                            libreria1.eliminarBodega()
+                                menuSistema()
 
-                        elif opcions == "3":
-                            libreria1.crearProducto()
+                                opcions = input("Ingrese una de las siguiente opciones: ")
 
-                        elif opcions == "4":
-                            libreria1.crearBodega()
+                                if opcions == "1":
+                                    libreria1.agregarProducto()
 
-                        elif opcions == "5":
-                            libreria1.eliminarProducto()
+                                elif opcions == "2":
+                                    libreria1.eliminarBodega()
 
-                        elif opcions == "6":
-                            libreria1.eliminarBodega()
+                                elif opcions == "3":
+                                    libreria1.crearProducto()
 
-                        elif opcions == "7":
-                            libreria1.eliminarEditorial()
+                                elif opcions == "4":
+                                    libreria1.crearBodega()
 
-                        elif opcions == "8":
-                            libreria1.eliminarAutor()
+                                elif opcions == "5":
+                                    libreria1.eliminarProducto()
 
-                        elif opcions == "0":
-                            self.usuario = ""
-                            break
+                                elif opcions == "6":
+                                    libreria1.eliminarBodega()
 
+                                elif opcions == "7":
+                                    libreria1.eliminarEditorial()
+
+                                elif opcions == "8":
+                                    libreria1.eliminarAutor()
+
+                                elif opcions == "0":
+                                    self.usuario = ""
+                                    break
+
+                                else:
+                                    print("*------------------------------------*")
+                                    print("**************************************")
+                                    print("***** La opcion ingresada no esta ****")
+                                    print("************** disponible ************")
+                                    print("**************************************")
+                                    print("*------------------------------------*")
+                                    
                         else:
-
                             print("*------------------------------------*")
                             print("**************************************")
-                            print("***** La opcion ingresada no esta ****")
-                            print("************** disponible ************")
+                            print("***** La contraseña ingresada es  ****")
+                            print("************* incorrecta *************")
                             print("**************************************")
                             print("*------------------------------------*")
-
-                else:
-                    print("*------------------------------------*")
-                    print("**************************************")
-                    print("***** La contraseña ingresada es  ****")
-                    print("************* incorrecta *************")
-                    print("**************************************")
-                    print("*------------------------------------*")
-
-            else:
-                print("EL nombre de usuario ingresado no se encuentra en el sistema.")
-                print("Intentalo de nuevo.")
+                            
+                            break
+                            
+                    except:
+                        print("*------------------------------------*")
+                        print("**************************************")
+                        print("***** La contraseña ingresada es  ****")
+                        print("************* incorrecta *************")
+                        print("**************************************")
+                        print("*------------------------------------*")
+                        
+                        break
+                    
+            except:
+                print("*------------------------------------*")
+                print("**************************************")
+                print("*** El nombre de usuario ingresado ***") 
+                print("****** no se encuentra en el *********")
+                print("*************** sistema **************")
+                print("**************************************")
+                print("*------------------------------------*")
+                
+                break
 
     def restablecerContrasena(self):
 
@@ -526,7 +549,49 @@ class Libreria:
             print("**** No tienes los permisos para  ****")
             print("******** utilizar esta funcion *******")
             print("**************************************")
-            print("*------------------------------------*")  
+            print("*------------------------------------*")
+            
+    def visualizarInformes(self):
+        
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                user="root", 
+                                                password="", 
+                                                database="libreria")
+        
+        cursor7 = self.conexion.cursor()
+        consulta1 = f"""SELECT cargo FROM usuario WHERE nombre = '{login1.usuario}'"""
+        cursor7.execute(consulta1)
+        resultados1 = cursor7.fetchone()
+
+        if "Jefe de Bodega" in resultados1:
+            
+            self.conexion = mysql.connector.connect(host="localhost", 
+                                                    user="root", 
+                                                    password="", 
+                                                    database="libreria")
+            
+            cursor8 = self.conexion.cursor()
+            consulta2 = f"""SELECT * FROM movimiento"""
+            cursor8.execute(consulta2)
+            resultados2 = cursor8.fetchall()
+            
+            print("*------------------------------------*")
+            print("**************************************")
+            print("********* Listado de Informes ********")
+            print("**************************************")
+            print("*------------------------------------*")
+
+            
+            for i in resultados2:
+                print(resultados2)
+
+        else:
+            print("*------------------------------------*")
+            print("**************************************")
+            print("**** No tienes los permisos para  ****")
+            print("******** utilizar esta funcion *******")
+            print("**************************************")
+            print("*------------------------------------*")
 
     def agregarProducto(self):
 
@@ -1205,7 +1270,7 @@ while True:
         print("*-------------------------------------*")
         
         break
-
+    
     else:
 
         print("*-------------------------------------*")
