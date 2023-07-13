@@ -1,8 +1,6 @@
 CREATE DATABASE LIBRERIA;
 USE LIBRERIA;
 
-
-
 CREATE TABLE usuario(
 id_usuario int not null auto_increment,
 nombre varchar(50),
@@ -58,8 +56,6 @@ foreign key (id_usuario) references usuario(id_usuario)
 CREATE TABLE bodega(
 cod_bodega int not null auto_increment,
 nombre_bodega varchar(50),
-producto varchar(50),
-cantidad int,
 primary key (cod_bodega)
 );
 
@@ -84,22 +80,17 @@ foreign key (cod_producto) references producto(cod_producto)
 
 CREATE TABLE movimiento(
 id_movimiento int not null auto_increment,
-bodega_origen int,
+cod_producto int not null,
 bodega_destino int,
-producto varchar(50),
 cantidad int,
 tipo_movimiento varchar(10),
-cod_producto int not null,
-primary key (id_movimiento),
-foreign key (cod_producto) references producto(cod_producto),
-foreign key (bodega_origen) references bodega(cod_bodega),
-foreign key (bodega_destino) references bodega(cod_bodega)
+primary key (id_movimiento)
 );
 /*INICIO EJEMPLO DE INICIO DE SESION (PARTE BASE DE DATOS)*/
 
 -- Llenar la tabla "usuario"
 INSERT INTO usuario (nombre, contraseña, cargo) VALUES
-  ('Matias Sepulveda', '123456', 'Jefe de bodega'),
+  ('Matias Sepulveda', '123456', 'Jefe de Bodega'),
   ('Bryan Barela', '12345', 'Bodeguero'),
   ('Fabian Rivera', '1234', 'Bodeguero');
 
@@ -113,16 +104,15 @@ select * from autor;
 INSERT INTO editorial (nombre_editorial) VALUES
   ('Salamandra'),
   ('Vyar');
-  
-select * from editorial;
+
 -- Llenar la tabla "tipo_producto"
 INSERT INTO tipo_producto (nombre_tipo) VALUES
   ('Libro'),
   ('Revista'),
   ('Enciclopedia');
-select * from tipo_producto;
+
 -- Llenar la tabla "producto"
-INSERT INTO producto (nombre, cod_tipo_producto, cod_editorial,cod_autor) VALUES
+INSERT INTO producto (nombre, cod_tipo_producto, cod_editorial, cod_autor) VALUES
   ('Harry Potter y la piedra filosofal', 1, 2,2),
   ('Harry Potter y la cámara secreta', 1, 2,2),
   ('Harry Potter y el prisionero de Azkaban', 1, 2,2);
@@ -152,9 +142,18 @@ INSERT INTO autor_producto (cod_autor, cod_producto) VALUES
   (1, 3);
 
 -- Llenar la tabla "movimiento"
-INSERT INTO movimiento (bodega_origen, bodega_destino, producto, cantidad, tipo_movimiento, cod_producto) VALUES
+INSERT INTO movimiento (bodega_origen, cantidad, cod_producto) VALUES
   (1, 2, 'Harry Potter y la piedra filosofal', 10, 'Traslado', 1),
   (2, 3, 'Harry Potter y la cámara secreta', 5, 'Traslado', 2),
   (3, 1, 'Harry Potter y el prisionero de Azkaban', 8, 'Traslado', 3);
 
+select * from producto_bodega;
 
+select * from movimiento;
+
+select * from usuario;
+
+SELECT cod_bodega FROM producto_bodega WHERE cod_producto = 2 AND cod_bodega = 1;
+
+INSERT INTO producto_bodega (cod_bodega, cod_producto, stock) VALUES
+  (1, 2, 70);
