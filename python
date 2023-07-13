@@ -1,7 +1,43 @@
-#Conexion MySQL Workbench
+#Conexion con MySQL Workbench.
+
 import mysql.connector
 
-#Creacion de la clase Login.
+# Creacion de la interfaz del menú de opciones.
+
+def menuSistema():
+
+    print("*----------------------------------------*")
+    print("******************************************")
+    print("************** El Gran Poeta *************")
+    print("******************************************")
+    print("** 1) Agregar Producto en una Bodega *****")
+    print("** 2) Eliminar Producto de una Bodega ****")
+    print("** 3) Crear Producto *********************")
+    print("** 4) Crear Bodega ***********************")
+    print("** 5) Eliminar Producto ******************")
+    print("** 6) Eliminar Bodega ********************")
+    print("** 7) Eliminar Editorial *****************")
+    print("** 8) Eliminar Autor *********************")
+    print("** 0) Salir del Sistema ******************")
+    print("******************************************")
+    print("*----------------------------------------*")
+
+# Creacion de la interfaz del menú "Login".
+
+def menuLogin():
+
+    print("*--------------------------------------*")
+    print("****************************************")
+    print("***************** Log-in ***************")
+    print("****************************************")
+    print("** 1) Iniciar sesion en el sistema *****")
+    print("** 2) Restablecer contraseña ***********")
+    print("** 0) Salir el sistema *****************")
+    print("****************************************")
+    print("*--------------------------------------*")
+
+# Creacion de la clase "Login".
+
 class Login:
 
     def __init__(self):
@@ -13,7 +49,6 @@ class Login:
         
         self.usuario = ""
         
-    #Creacion del metodo inicioSesion.     
     def inicioSesion(self):
 
         while True:
@@ -45,12 +80,12 @@ class Login:
                 
                 cursorr = self.conexion.cursor()
 
-                print("-------------------------------------------------")
-                print("*************************************************")
-                print("******* El nombre de usuario ingresado se *******") 
-                print("************ encuentra en el sistema ************")
-                print("*************************************************")
-                print("-------------------------------------------------")
+                print("----------------------------------------")
+                print("****************************************")
+                print("** El nombre de usuario ingresado se ***")
+                print("****** encuentra en el sistema *********")
+                print("****************************************")
+                print("----------------------------------------")
 
                 contrasena = input("Ingrese su contraseña: ")
                 consulta2 = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
@@ -59,15 +94,14 @@ class Login:
 
                 if contrasena in resultado2:
 
-                    print("*------------------------------------------*")
-                    print("********************************************")
-                    print("** ¡Ha ingresado exitosamente al sistema! **")
-                    print("********************************************")
-                    print("*------------------------------------------*")
+                    print("*----------------------------------------*")
+                    print("******************************************")
+                    print("* ¡Ha ingresado exitosamente al sistema! *")
+                    print("******************************************")
+                    print("*----------------------------------------*")
 
                     self.usuario = nombre_usuario
 
-                    #Creacion del objeto "libreria1".
                     libreria1 = Libreria()
 
                     while True:
@@ -77,35 +111,40 @@ class Login:
                         opcions = input("Ingrese una de las siguiente opciones: ")
 
                         if opcions == "1":
-                            pass
+                            libreria1.agregarProducto()
 
                         elif opcions == "2":
-                            pass
+                            libreria1.eliminarBodega()
 
                         elif opcions == "3":
-                            pass
+                            libreria1.crearProducto()
 
                         elif opcions == "4":
-                            pass
+                            libreria1.crearBodega()
 
                         elif opcions == "5":
-                            libreria1.crearBodega()
+                            libreria1.eliminarProducto()
 
                         elif opcions == "6":
                             libreria1.eliminarBodega()
+
+                        elif opcions == "7":
+                            libreria1.eliminarEditorial()
+
+                        elif opcions == "8":
+                            libreria1.eliminarAutor()
 
                         elif opcions == "0":
                             self.usuario = ""
                             break
 
                         else:
-                            print("--------------------------------------------")
-                            print("********************************************")
-                            print("***** La opcion ingresada no es valida *****")
-                            print("********************************************")
-                            print("--------------------------------------------")
-                    
-                    break
+
+                            print("*----------------------------------------*")
+                            print("******************************************")
+                            print("* La opcion ingresada no esta disponible *")
+                            print("******************************************")
+                            print("*----------------------------------------*")
 
                 else:
                     print("*-----------------------------------------*")
@@ -115,18 +154,9 @@ class Login:
                     print("*-----------------------------------------*")
 
             else:
-                print("-----------------------------------------------------")
-                print("*****************************************************")
-                print("******* El nombre de usuario ingresado no se ********")
-                print("************** encuentra en el sistema **************")
-                print("*****************************************************")
-                print("-----------------------------------------------------")
-                print("*****************************************************")
-                print("**************** Intentalo de nuevo *****************")
-                print("*****************************************************")
-                print("-----------------------------------------------------")
+                print("EL nombre de usuario ingresado no se encuentra en el sistema.")
+                print("Intentalo de nuevo.")
 
-    #Creacion del metodo restablecerContrasena.
     def restablecerContrasena(self):
 
         self.conexion = mysql.connector.connect(host="localhost", 
@@ -147,56 +177,118 @@ class Login:
         cursor2.execute(consulta1)
         resultados = cursor2.fetchone()
 
-        if nombre_usuario in resultados:
+        try:
 
-            self.conexion = mysql.connector.connect(host="localhost", 
-                                                    user="root", 
-                                                    password="", 
-                                                    database="libreria")
+            if nombre_usuario in resultados:
+                
+                self.conexion = mysql.connector.connect(host="localhost", 
+                                                        user="root", 
+                                                        password="", 
+                                                        database="libreria")
+                
+                print("*--------------------------------------*")
+                print("****************************************")
+                print("**** Se ha encontrado el nombre de  ****")
+                print("********* usuario en el sistema ********")
+                print("****************************************")
+                print("*--------------------------------------*")
+                
+                cursor5 = self.conexion.cursor()
+                consulta3 = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
+                cursor5.execute(consulta3)
+                resultado4 = cursor5.fetchone()
+                contrasena_antigua = input("Ingrese su actual contraseña: ")
+
+                try:
+
+                    if contrasena_antigua in resultado4:
+                
+                        self.conexion = mysql.connector.connect(host="localhost", 
+                                                                user="root", 
+                                                                password="", 
+                                                                database="libreria")
             
-            cursor4 = self.conexion.cursor()
+                        cursor4 = self.conexion.cursor()
 
-            print("*--------------------------------------------------------*")
-            print("*********************************************************")
-            print("** Se ha encontrado el nombre de usuario en el sistema **")
-            print("*********************************************************")
-            print("*--------------------------------------------------------*")
+                        print("*--------------------------------------*")
+                        print("****************************************")
+                        print("******** La contraseña ingresada *******")
+                        print("************** es correcta *************")
+                        print("****************************************")
+                        print("*--------------------------------------*")
 
-            nueva_contrasena = input("Ingresa tu nueva contraseña: ")
-            consultaad = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
-            cursor4.execute(consultaad)
-            resultado3 = cursor4.fetchone()
+                        nueva_contrasena = input("Ingresa tu nueva contraseña: ")
+                        consultaad = f"""SELECT contraseña FROM usuario WHERE nombre = '{nombre_usuario}'"""
+                        cursor4.execute(consultaad)
+                        resultado3 = cursor4.fetchone()
 
-            if nueva_contrasena in resultado3:
+                        if nueva_contrasena in resultado3:
 
-                print("*-----------------------------------------------*")
-                print("*************************************************")
-                print("*** La contraseña no ha podido ser modificada ***")
-                print("*************************************************")
-                print("*-----------------------------------------------*")
+                            print("*-------------------------------------*")
+                            print("***************************************")
+                            print("*** La contraseña no ha podido ser  ***")
+                            print("************* modificada **************")
+                            print("***************************************")
+                            print("*-------------------------------------*")
+
+                        else:
+
+                            self.conexion = mysql.connector.connect(host="localhost", 
+                                                                    user="root", 
+                                                                    password="", 
+                                                                    database="libreria")
+
+                            cursor3 = self.conexion.cursor()
+                            consulta2 = f"""UPDATE usuario SET contraseña = '{nueva_contrasena}' WHERE nombre = '{nombre_usuario}'"""
+                            cursor3.execute(consulta2)
+                            self.conexion.commit()
+                            cursor3.close()
+
+                            print("*--------------------------------------*")
+                            print("****************************************")
+                            print("**** ¡La contraseña se ha cambiado  ****")
+                            print("************ exitosamente! *************")
+                            print("****************************************")
+                            print("*--------------------------------------*")
+
+                    else:
+
+                        print("*--------------------------------------*")
+                        print("****************************************")
+                        print("****** La contraseña ingresada no  *****")
+                        print("************* es correcta **************")
+                        print("****************************************")
+                        print("*--------------------------------------*")
+
+                except:
+
+                    print("*----------------------------------*")
+                    print("************************************")
+                    print("**** La contraseña ingresada no  ***")
+                    print("*********** es correcta ************")
+                    print("************************************")
+                    print("*----------------------------------*")
 
             else:
 
-                cursor3 = self.conexion.cursor()
-                consulta2 = f"""UPDATE usuario SET contraseña = '{nueva_contrasena}' WHERE nombre = '{nombre_usuario}'"""
-                cursor3.execute(consulta2)
-                self.conexion.commit()
-                cursor3.close()
+                print("*---------------------------------------*")
+                print("*****************************************")
+                print("* El nombre de usuario ingresado no se  *")
+                print("******** encuentra en el sistema ********")
+                print("*****************************************")
+                print("*---------------------------------------*")
 
-                print("*-----------------------------------------------*")
-                print("*************************************************")
-                print("** ¡La contraseña se ha cambiado exitosamente! **")
-                print("*************************************************")
-                print("*-----------------------------------------------*")
+        except:
 
-        else:
-            
-            print("-----------------------------------------------------")
-            print("*****************************************************")
-            print("******* El nombre de usuario ingresado no se ********")
-            print("************** encuentra en el sistema **************")
-            print("*****************************************************")
-            print("-----------------------------------------------------")
+            print("*---------------------------------------*")
+            print("*****************************************")
+            print("* El nombre de usuario ingresado no se  *")
+            print("******** encuentra en el sistema ********")
+            print("*****************************************")
+            print("*---------------------------------------*")
+                        
+
+
 
 class Libreria:
 
@@ -207,7 +299,6 @@ class Libreria:
                                                 password="", 
                                                 database="libreria")
         
-    #Creacion del metodo crearBodega.
     def crearBodega(self):
 
         self.conexion = mysql.connector.connect(host="localhost", 
@@ -230,7 +321,7 @@ class Libreria:
 
             cursor5 = self.conexion.cursor()
             nombre_bodega = input("Ingrese el nombre de la nueva bodega: ")
-            consulta = f"""INSERT INTO bodega(nombre_bodega, producto, cantidad) VALUES('{nombre_bodega}', 0, 0)"""
+            consulta = f"""INSERT INTO bodega(nombre_bodega) VALUES('{nombre_bodega}')"""
             cursor5.execute(consulta)
             self.conexion.commit()
             cursor5.close()
@@ -248,7 +339,454 @@ class Libreria:
             print("******************************************************************")
             print("*----------------------------------------------------------------*")
 
-    #Creacion del metodo eliminarBodega.
+    def crearProducto(self):
+
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                user="root", 
+                                                password="", 
+                                                database="libreria")
+
+        cursor1 = self.conexion.cursor()
+        consulta1 = f"""SELECT cargo FROM usuario WHERE nombre = '{login1.usuario}'"""
+        cursor1.execute(consulta1)
+        resultados = cursor1.fetchone()
+
+        if "Jefe de Bodega" in resultados:
+
+            self.conexion = mysql.connector.connect(host="localhost", 
+                                                    user="root", 
+                                                    password="", 
+                                                    database="libreria")
+
+            print("*----------------------------------------*")
+            print("******************************************")
+            print("************ Crear Producto **************")
+            print("******************************************")
+            print("*----------------------------------------*")
+
+            cursor2 = self.conexion.cursor()
+            nombre_producto = input("Ingrese el nombre del nuevo producto: ")
+            consulta2 = f"""SELECT * FROM tipo_producto"""
+            cursor2.execute(consulta2)
+            resultados1 = cursor2.fetchall()
+
+            print("*------------------------------------------*")
+
+            for i in resultados1:
+                print(i)
+
+            print("*------------------------------------------*")
+
+            cod_tipo_producto = int(input("Ingrese el codigo del tipo de producto: "))
+
+            cursor3 = self.conexion.cursor()
+            consulta3 = f"""SELECT cod_tipo_producto FROM tipo_producto WHERE cod_tipo_producto = '{cod_tipo_producto}'"""
+            cursor3.execute(consulta3)
+            resultados2 = cursor3.fetchone()
+
+            try:
+
+                if cod_tipo_producto in resultados2:
+                    
+                    self.conexion = mysql.connector.connect(host="localhost", 
+                                                            user="root", 
+                                                            password="", 
+                                                            database="libreria")
+                    
+                    cursor4 = self.conexion.cursor()
+                    consulta4 = f"""SELECT * FROM editorial"""
+                    cursor4.execute(consulta4)
+                    resultados3 = cursor4.fetchall()
+
+                    print("*------------------------------------------*")
+
+                    for i in resultados3:
+                        print(i)
+
+                    print("*------------------------------------------*")
+
+                    cod_editorial = int(input("Ingrese el codigo de la editorial: "))
+
+                    cursor5 = self.conexion.cursor()
+                    consulta5 = f"""SELECT cod_editorial FROM editorial WHERE cod_editorial = '{cod_editorial}'"""
+                    cursor5.execute(consulta5)
+                    resultados4 = cursor5.fetchone()
+
+                    try:
+                        if cod_editorial in resultados4:
+
+                            self.conexion = mysql.connector.connect(host="localhost", 
+                                                                    user="root", 
+                                                                    password="", 
+                                                                    database="libreria")
+                            
+                            cursor6 = self.conexion.cursor()
+                            consulta6 = f"""SELECT * FROM autor"""
+                            cursor6.execute(consulta6)
+                            resultados5 = cursor6.fetchall()
+
+                            print("*------------------------------------------*")
+
+                            for i in resultados5:
+                                print(i)
+
+                            print("*------------------------------------------*")
+
+                            cod_autor = int(input("Ingrese el codigo del autor: "))
+
+                            print("*------------------------------------------*")
+
+                            cursor7 = self.conexion.cursor()
+                            consulta7 = f"""SELECT cod_autor FROM autor WHERE cod_autor = '{cod_autor}'"""
+                            cursor7.execute(consulta7)
+                            resultados6 = cursor7.fetchone()
+
+                            try:
+                                
+                                if cod_autor in resultados6:
+                                    
+                                    self.conexion = mysql.connector.connect(host="localhost", 
+                                                                            user="root", 
+                                                                            password="", 
+                                                                            database="libreria")
+                                    
+                                    cursor8 = self.conexion.cursor()
+                                    consulta8 = f"""INSERT INTO producto(nombre, cod_tipo_producto, cod_editorial, cod_autor) VALUES('{nombre_producto}','{cod_tipo_producto}','{cod_editorial}','{cod_autor}')"""
+                                    cursor8.execute(consulta8)
+                                    self.conexion.commit()
+                                    cursor8.close()
+
+                                    print("-------------------------------------------")
+                                    print("*******************************************")
+                                    print("*** El producto fue creado exitosamente ***")
+                                    print("*******************************************")
+                                    print("-------------------------------------------")
+
+                                else:
+
+                                    print("-------------------------------------------")
+                                    print("*******************************************")
+                                    print("*** El codigo ingresado no esta asociado **")
+                                    print("******** a ningun autor existente *********")
+                                    print("*******************************************")
+                                    print("-------------------------------------------")
+
+                            except:
+                                    
+                                    print("-------------------------------------------")
+                                    print("*******************************************")
+                                    print("*** El codigo ingresado no esta asociado **")
+                                    print("******** a ningun autor existente *********")
+                                    print("*******************************************")
+                                    print("-------------------------------------------")
+
+                        else:
+
+                            print("-------------------------------------------")
+                            print("*******************************************")
+                            print("*** El codigo ingresado no esta asociado **")
+                            print("****** a ninguna editorial existente ******")
+                            print("*******************************************")
+                            print("-------------------------------------------")
+
+                    except:
+
+                        print("-------------------------------------------")
+                        print("*******************************************")
+                        print("*** El codigo ingresado no esta asociado **")
+                        print("****** a ninguna editorial existente ******")
+                        print("*******************************************")
+                        print("-------------------------------------------")
+
+                else:
+
+                    print("-------------------------------------------")
+                    print("*******************************************")
+                    print("*** El codigo ingresado no esta asociado **")
+                    print("******** a ningun tipo de producto ********")
+                    print("*******************************************")
+                    print("-------------------------------------------")
+
+            except:
+
+                print("-------------------------------------------")
+                print("*******************************************")
+                print("*** El codigo ingresado no esta asociado **")
+                print("******** a ningun tipo de producto ********")
+                print("*******************************************")
+                print("-------------------------------------------")
+
+        else:
+
+            print("*------------------------------------------*")
+            print("********************************************")
+            print("*** No tienes los permisos para utilizar ***")
+            print("************** esta funcion ****************")
+            print("********************************************")
+            print("*------------------------------------------*")
+
+    def agregarProducto(self):
+
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                user="root", 
+                                                password="", 
+                                                database="libreria")
+        
+        print("*----------------------------------------*")
+        print("******************************************")
+        print("********* Agregar un Producto ************")
+        print("************* a una Bodega ***************")
+        print("******************************************")
+        print("*----------------------------------------*")
+
+        cursor1 = self.conexion.cursor()
+        consulta1 = f"""SELECT * FROM producto"""
+        cursor1.execute(consulta1)
+        resultados1 = cursor1.fetchall()
+
+        print("*----------------------------------------*")
+
+        for i in resultados1:
+            print(i)
+
+        print("*----------------------------------------*")
+
+        cod_producto = int(input("Ingrese el codigo del producto: "))
+        cursor2 = self.conexion.cursor()
+        consulta2 = f"""SELECT cod_producto FROM producto WHERE cod_producto = '{cod_producto}'"""
+        cursor2.execute(consulta2)
+        resultados2 = cursor2.fetchone()
+
+        try:
+
+            if cod_producto in resultados2:
+
+                self.conexion = mysql.connector.connect(host="localhost", 
+                                                        user="root", 
+                                                        password="", 
+                                                        database="libreria")
+                
+                cursor3 = self.conexion.cursor()
+                consulta3 = f"""SELECT * FROM bodega"""
+                cursor3.execute(consulta3)
+                resultados3 = cursor3.fetchall()
+
+                print("*----------------------------------------*")
+
+                for i in resultados3:
+                    print(i)
+
+                print("*----------------------------------------*")
+
+                cod_bodega = int(input("Ingrese el codigo de la bodega: "))
+
+                print("*----------------------------------------*")
+
+                cursor4 = self.conexion.cursor()
+                consulta4 = f"""SELECT cod_bodega FROM bodega WHERE cod_bodega = '{cod_bodega}'"""
+                cursor4.execute(consulta4)
+                resultados4 = cursor4.fetchone()
+
+                try:
+
+                    if cod_bodega in resultados4:
+                        
+                        nuevo_stock = int(input("Ingrese el stock que tendra el producto: "))
+
+                        print("*----------------------------------------*")
+
+
+                        self.conexion = mysql.connector.connect(host="localhost", 
+                                                                user="root", 
+                                                                password="", 
+                                                                database="libreria")
+
+                        cursor5 = self.conexion.cursor()
+                        consulta5 = f"""INSERT INTO producto_bodega(cod_bodega, cod_producto, stock) VALUES('{cod_bodega}','{cod_producto}','{nuevo_stock}')"""
+                        cursor5.execute(consulta5)
+                        self.conexion.commit()
+                        cursor5.close()
+
+                        print("-------------------------------------------")
+                        print("*******************************************")
+                        print("**** ¡El producto ha sido agregado a una **")
+                        print("***************** bodega! *****************")
+                        print("*******************************************")
+                        print("-------------------------------------------")
+
+                        cursor8 = self.conexion.cursor()
+                        consulta8 = f"""INSERT INTO movimiento(cod_producto, bodega_destino, tipo_movimiento, cantidad) VALUES('{cod_producto}', '{cod_bodega}', 'Translado','{nuevo_stock}')"""
+                        cursor8.execute(consulta8)
+                        self.conexion.commit()
+                        cursor8.close()
+
+                        print("-------------------------------------------")
+                        print("*******************************************")
+                        print("********* Documento de Movimiento *********")
+                        print("*******************************************")
+                        print(f"** Cod - Producto: {cod_producto} ********")
+                        print(f"** Cod - Bodega: {cod_bodega} ************")
+                        print(f"** Stock: {nuevo_stock} ******************")
+                        print(f"** Tipo de Movimiento: Translado *********")
+                        print("*******************************************")
+                        print("-------------------------------------------")
+                        
+                    else:
+                        print("-------------------------------------------")
+                        print("*******************************************")
+                        print("*** El codigo ingresado no esta asociado **")
+                        print("************ a ninguna bodega *************")
+                        print("*******************************************")
+                        print("-------------------------------------------")
+
+                except:
+
+                    print("-------------------------------------------")
+                    print("*******************************************")
+                    print("*** El codigo ingresado no esta asociado **")
+                    print("************ a ninguna bodega *************")
+                    print("*******************************************")
+                    print("-------------------------------------------")
+
+            else:
+
+                print("-------------------------------------------")
+                print("*******************************************")
+                print("*** El codigo ingresado no esta asociado **")
+                print("************ a ningun producto ************")
+                print("*******************************************")
+                print("-------------------------------------------")
+        
+        except:
+
+            print("-------------------------------------------")
+            print("*******************************************")
+            print("*** El codigo ingresado no esta asociado **")
+            print("************ a ningun producto ************")
+            print("*******************************************")
+            print("-------------------------------------------")
+        
+
+
+    def quitarProducto(self):
+
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                user="root", 
+                                                password="", 
+                                                database="libreria")
+        
+        print("*----------------------------------------*")
+        print("******************************************")
+        print("********** Quitar un Producto ************")
+        print("************* de una Bodega **************")
+        print("******************************************")
+        print("*----------------------------------------*")
+        
+        cursor1 = self.conexion.cursor()
+        consulta1 = f"""SELECT * FROM producto"""
+        cursor1.execute(consulta1)
+        resultados1 = cursor1.fetchall()
+
+        print("*----------------------------------------*")
+
+        for i in resultados1:
+            print(i)
+
+        print("*----------------------------------------*")
+
+        cod_producto = int(input("Ingrese el codigo del producto: "))
+        cursor2 = self.conexion.cursor()
+        consulta2 = f"""SELECT cod_producto FROM producto WHERE cod_producto = '{cod_producto}'"""
+        cursor2.execute(consulta2)
+        resultados2 = cursor2.fetchone()
+
+        try:
+
+            if cod_producto in resultados2:
+
+                self.conexion = mysql.connector.connect(host="localhost", 
+                                                        user="root", 
+                                                        password="", 
+                                                        database="libreria")
+                
+                cursor3 = self.conexion.cursor()
+                consulta3 = f"""SELECT * FROM bodega"""
+                cursor3.execute(consulta3)
+                resultados3 = cursor3.fetchall()
+
+                print("*----------------------------------------*")
+
+                for i in resultados3:
+                    print(i)
+
+                print("*----------------------------------------*")
+
+                cod_bodega = int(input("Ingrese el codigo de la bodega: "))
+
+                print("*----------------------------------------*")
+
+                cursor4 = self.conexion.cursor()
+                consulta4 = f"""SELECT cod_bodega FROM bodega WHERE cod_bodega = '{cod_bodega}'"""
+                cursor4.execute(consulta4)
+                resultados4 = cursor4.fetchone()
+
+                try:
+
+                    if cod_bodega in resultados4:
+
+                        self.conexion = mysql.connector.connect(host="localhost", 
+                                                                user="root", 
+                                                                password="", 
+                                                                database="libreria")
+
+                        cursor5 = self.conexion.cursor()
+                        consulta5 = f"""DELETE FROM producto_bodega WHERE cod_producto = '{cod_producto}' AND cod_bodega = '{cod_bodega}'"""
+                        cursor5.execute(consulta5)
+                        self.conexion.commit()
+                        cursor5.close()
+
+                        print("-------------------------------------------")
+                        print("*******************************************")
+                        print("**** ¡El producto ha sido eliminado de ****")
+                        print("*************** la bodega! ****************")
+                        print("*******************************************")
+                        print("-------------------------------------------")
+
+                    else:
+                        print("-------------------------------------------")
+                        print("*******************************************")
+                        print("*** El codigo ingresado no esta asociado **")
+                        print("************ a ninguna bodega *************")
+                        print("*******************************************")
+                        print("-------------------------------------------")
+
+                except:
+
+                    print("-------------------------------------------")
+                    print("*******************************************")
+                    print("*** El codigo ingresado no esta asociado **")
+                    print("************ a ninguna bodega *************")
+                    print("*******************************************")
+                    print("-------------------------------------------")
+
+            else:
+
+                print("-------------------------------------------")
+                print("*******************************************")
+                print("*** El codigo ingresado no esta asociado **")
+                print("************ a ningun producto ************")
+                print("*******************************************")
+                print("-------------------------------------------")
+        
+        except:
+
+            print("-------------------------------------------")
+            print("*******************************************")
+            print("*** El codigo ingresado no esta asociado **")
+            print("************ a ningun producto ************")
+            print("*******************************************")
+            print("-------------------------------------------")
+
     def eliminarBodega(self):
 
         self.conexion = mysql.connector.connect(host="localhost", 
@@ -262,74 +800,77 @@ class Libreria:
         resultados = cursor7.fetchone()
 
         if "Jefe de Bodega" in resultados:
+            
 
             self.conexion = mysql.connector.connect(host="localhost", 
                                                     user="root", 
                                                     password="", 
                                                     database="libreria")
 
-            print("*----------------------------------------------------------------*")
-            print("******************************************************************")
-            print("********************** Eliminar una Bodega ***********************")
-            print("******************************************************************")
-            print("*----------------------------------------------------------------*")
+            print("*-------------------------------------------------*")
+            print("***************************************************")
+            print("************** Eliminar una Bodega ****************")
+            print("***************************************************")
+            print("*-------------------------------------------------*")
 
             cursor8 = self.conexion.cursor()
-            consulta7 = f"""SELECT * FROM bodega"""
-            cursor8.execute(consulta7)
-            resultados3 = cursor8.fetchall()
-            
-            for i in resultados3:
-                print(i)
-                
-            print("-----------------------------------------------------------------")
 
             codigo_bodega = int(input("Ingrese el codigo de la bodega: "))
             consulta5 = f"""SELECT cod_bodega FROM bodega WHERE cod_bodega = '{codigo_bodega}'"""
             cursor8.execute(consulta5)
             resultados = cursor8.fetchone()
-            
-            if codigo_bodega in resultados:
 
-                self.conexion = mysql.connector.connect(host="localhost", 
-                                                        user="root", 
-                                                        password="", 
-                                                        database="libreria")
+            try:
 
-                cursor9 = self.conexion.cursor()
-
-                consulta6 = f"""SELECT * FROM producto_bodega WHERE cod_bodega = '{codigo_bodega}'"""
-                cursor9.execute(consulta6)
-                resultados2 = cursor9.fetchone()
-
-                if resultados2:
-
-                    print("*----------------------------------------------------------------*")
-                    print("******************************************************************")
-                    print("******** No ha sido posible eliminar la bodega ingresada *********")
-                    print("******************************************************************")
-                    print("*----------------------------------------------------------------*")
-
-                else:
-
+                if codigo_bodega in resultados:
+                
                     self.conexion = mysql.connector.connect(host="localhost", 
                                                             user="root", 
                                                             password="", 
                                                             database="libreria")
 
                     cursor9 = self.conexion.cursor()
-                    consulta6 = f"""DELETE FROM bodega WHERE cod_bodega = '{codigo_bodega}'"""
+
+                    consulta6 = f"""SELECT * FROM producto_bodega WHERE cod_bodega = '{codigo_bodega}'"""
                     cursor9.execute(consulta6)
-                    self.conexion.commit()
-                    cursor9.close()
+                    resultados2 = cursor9.fetchall()
+
+                    if resultados2:
+
+                        print("*----------------------------------------------------------------*")
+                        print("******************************************************************")
+                        print("******** No ha sido posible eliminar la bodega ingresada *********")
+                        print("******************************************************************")
+                        print("*----------------------------------------------------------------*")
+
+                    else:
+
+                        self.conexion = mysql.connector.connect(host="localhost", 
+                                                                user="root", 
+                                                                password="", 
+                                                                database="libreria")
+
+                        cursor9 = self.conexion.cursor()
+                        consulta6 = f"""DELETE FROM bodega WHERE cod_bodega = '{codigo_bodega}'"""
+                        cursor9.execute(consulta6)
+                        self.conexion.commit()
+                        cursor9.close()
+
+                        print("*----------------------------------------------------------------*")
+                        print("******************************************************************")
+                        print("*********** ¡La Bodega ha sido eliminada exitosamente! ***********")
+                        print("******************************************************************")
+                        print("*----------------------------------------------------------------*")                    
+
+                else:
 
                     print("*----------------------------------------------------------------*")
                     print("******************************************************************")
-                    print("*********** ¡La Bodega ha sido eliminada exitosamente! ***********")
+                    print("********* El codigo ingresado no pertenece a una bodega **********")
                     print("******************************************************************")
-                    print("*----------------------------------------------------------------*")                    
+                    print("*----------------------------------------------------------------*")
 
-            else:
+            except:
 
                 print("*----------------------------------------------------------------*")
                 print("******************************************************************")
@@ -338,48 +879,300 @@ class Libreria:
                 print("*----------------------------------------------------------------*")
 
         else:
+
             print("*----------------------------------------------------------------*")
             print("******************************************************************")
             print("******* No tienes los permisos para utilizar esta funcion ********")
             print("******************************************************************")
             print("*----------------------------------------------------------------*")
 
-#Creaciom de la funcion "menuSistema".
-def menuSistema():
+    def eliminarAutor(self):
 
-    print("*----------------------------------------*")
-    print("******************************************")
-    print("***************** Empresa ****************")
-    print("******************************************")
-    print("******************************************")
-    print("** 1) Agregar Producto en una Bodega *****")
-    print("** 2) Eliminar Producto de una Bodega ****")
-    print("** 3) Crear Productos ********************")
-    print("** 4) Eliminar Productos *****************")
-    print("** 5) Crear Bodega ***********************")
-    print("** 6) Eliminar Bodega ********************")
-    print("** 0) Salir del Sistema ******************")
-    print("******************************************")
-    print("*----------------------------------------*")
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                user="root", 
+                                                password="", 
+                                                database="libreria")
+        
+        cursor10 = self.conexion.cursor()
+        consulta1 = f"""SELECT cargo FROM usuario WHERE nombre = '{login1.usuario}'"""
+        cursor10.execute(consulta1)
+        resultado2 = cursor10.fetchone()
 
-#Creacion de la funcion "menuLogin".
-def menuLogin():
+        if "Jefe de Bodega" in resultado2:
 
-    print("*--------------------------------------*")
-    print("****************************************")
-    print("***************** Login ****************")
-    print("****************************************")
-    print("****************************************")
-    print("** 1) Iniciar sesion en el sistema *****")
-    print("** 2) Restablecer contraseña ***********")
-    print("** 0) Salir el sistema *****************")
-    print("****************************************")
-    print("*--------------------------------------*")
+            print("*-----------------------------------------*")
+            print("*******************************************")
+            print("************ Eliminar un Autor ************")
+            print("*******************************************")
+            print("*-----------------------------------------*")
+            
+            cursor9 = self.conexion.cursor()
+            consultag = f"""SELECT * FROM autor"""
+            cursor9.execute(consultag)
+            resultadog = cursor9.fetchall()
 
-#Creacion de objeto "login1" de la clase Login.
+            for i in resultadog:
+                print(i)
+
+            print("*-----------------------------------------*")
+
+            cursor11 = self.conexion.cursor()
+
+            codigo_autor = int(input("Ingrese el codigo del autor: "))
+            consulta9 = f"""SELECT cod_autor FROM autor"""
+            cursor11.execute(consulta9)
+            resultados = cursor11.fetchall()
+            print(resultados)
+
+            try:
+
+                if codigo_autor in resultados:
+                    
+                    self.conexion = mysql.connector.connect(host="localhost", 
+                                                            user="root", 
+                                                            password="", 
+                                                            database="libreria")
+                
+                    cursor12 = self.conexion.cursor()
+                    consulta2 = f"""SELECT * FROM autor_producto WHERE cod_autor = '{codigo_autor}'"""
+                    cursor12.execute(consulta2)
+                    resultados2 = cursor12.fetchall()
+
+                    if resultados2:
+
+                        print("*--------------------------------------------------*")
+                        print("****************************************************")
+                        print("*********** El autor no ha podido ser **************")
+                        print("******************* eliminado **********************")
+                        print("****************************************************")
+                        print("*--------------------------------------------------*")    
+
+                    else:
+
+                        cursor10 = self.conexion.cursor()
+                        consulta10 = f"""DELETE FROM autor WHERE cod_autor = {codigo_autor}"""
+                        cursor10.execute(consulta10)
+                        self.conexion.commit()
+                        cursor10.close()
+
+                        print("*------------------------------------------*")
+                        print("********************************************")
+                        print("******** El autor ha sido eliminado ********")
+                        print("********************************************")
+                        print("*------------------------------------------*")    
+                
+                else:
+                    print("*--------------------------------------------------*")
+                    print("****************************************************")
+                    print("******* El codigo ingresado no esta asociado *******")
+                    print("************ a ningun autor existente **************")
+                    print("****************************************************")
+                    print("*--------------------------------------------------*")
+
+            except:
+
+                print("*--------------------------------------------------*")
+                print("****************************************************")
+                print("******* El codigo ingresado no esta asociado *******")
+                print("************ a ningun autor existente **************")
+                print("****************************************************")
+                print("*--------------------------------------------------*")
+        else:
+
+            print("*----------------------------------------------------------------*")
+            print("******************************************************************")
+            print("******* No tienes los permisos para utilizar esta funcion ********")
+            print("******************************************************************")
+            print("*----------------------------------------------------------------*")
+          
+
+    def eliminarEditorial(self):
+        
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                user="root", 
+                                                password="", 
+                                                database="libreria")
+        
+        cursor13 = self.conexion.cursor()
+        consulta1 = f"""SELECT cargo FROM usuario WHERE nombre = '{login1.usuario}'"""
+        cursor13.execute(consulta1)
+        resultado2 = cursor13.fetchone()
+
+        if "Jefe de Bodega" in resultado2:
+
+            self.conexion = mysql.connector.connect(host="localhost", 
+                                                    user="root", 
+                                                    password="", 
+                                                    database="libreria")
+
+            print("*----------------------------------------------------------------*")
+            print("******************************************************************")
+            print("******************* Eliminar una Editorial ***********************")
+            print("******************************************************************")
+            print("*----------------------------------------------------------------*")
+            
+            cursor15 = self.conexion.cursor()
+            consultag = f"""SELECT * FROM editorial"""
+            cursor15.execute(consultag)
+            resultadog = cursor15.fetchall()
+
+            for i in resultadog:
+                print(i)
+
+            print("*----------------------------------------------------------------*")
+
+            cursor14 = self.conexion.cursor()
+
+            codigo_editorial = int(input("Ingrese el codigo asociado a la editorial: "))
+            consulta9 = f"""SELECT cod_editorial FROM editorial WHERE cod_editorial = '{codigo_editorial}'"""
+            cursor14.execute(consulta9)
+            resultado6 = cursor14.fetchone()
+
+            try:
+
+                if codigo_editorial in resultado6:
+                    
+                    self.conexion = mysql.connector.connect(host="localhost", 
+                                                            user="root", 
+                                                            password="", 
+                                                            database="libreria")
+                
+                    cursor15 = self.conexion.cursor()
+                    consulta2 = f"""SELECT cod_editorial FROM producto WHERE cod_editorial = '{codigo_editorial}'"""
+                    cursor15.execute(consulta2)
+                    resultados3 = cursor15.fetchall()
+
+                    if resultados3:
+
+                        print("*--------------------------------------------------*")
+                        print("****************************************************")
+                        print("********** La editorial no ha podido ser ***********")
+                        print("******************* eliminada **********************")
+                        print("****************************************************")
+                        print("*--------------------------------------------------*")    
+
+                    else:
+
+                        cursor16 = self.conexion.cursor()
+                        consulta3 = f"""DELETE FROM editorial WHERE cod_editorial = {codigo_editorial}"""
+                        cursor16.execute(consulta3)
+                        self.conexion.commit()
+                        cursor16.close()
+
+                        print("*---------------------------------------------------*")
+                        print("*****************************************************")
+                        print("********** La editorial ha sido eliminada ***********")
+                        print("*****************************************************")
+                        print("*---------------------------------------------------*")    
+                
+                else:
+                    print("*--------------------------------------------------*")
+                    print("****************************************************")
+                    print("******* El codigo ingresado no esta asociado *******")
+                    print("********** a ninguna editorial existente ***********")
+                    print("****************************************************")
+                    print("*--------------------------------------------------*")  
+
+            except:
+
+                print("*--------------------------------------------------*")
+                print("****************************************************")
+                print("******* El codigo ingresado no esta asociado *******")
+                print("********** a ninguna editorial existente ***********")
+                print("****************************************************")
+                print("*--------------------------------------------------*")  
+
+        else:
+                print("*----------------------------------------------------------*")
+                print("***********************************************************")
+                print("**** No tienes los permisos para utilizar esta funcion ****")
+                print("***********************************************************")
+                print("*---------------------------------------------------------*")
+
+    def eliminarProducto(self):
+        self.conexion = mysql.connector.connect(host="localhost", 
+                                                user="root", 
+                                                password="", 
+                                                database="libreria")
+                
+        cursor11 = self.conexion.cursor()
+        consulta1 = f"""SELECT cargo FROM usuario WHERE nombre = '{login1.usuario}'"""
+        cursor11.execute(consulta1)
+        resultado3 = cursor11.fetchone()
+
+        if "Jefe de Bodega" in resultado3:
+
+            print("*----------------------------------------------------------------*")
+            print("******************************************************************")
+            print("********************** Eliminar Producto *************************")
+            print("******************************************************************")
+            print("*----------------------------------------------------------------*")
+
+            cursor15 = self.conexion.cursor()
+            consulta5 = f"""SELECT * FROM producto"""
+            cursor15.execute(consulta5)
+            resultado5 = cursor15.fetchall()
+
+            print("*----------------------------------------------------------------*")
+
+            for i in resultado5:
+                print(i)
+
+            print("*----------------------------------------------------------------*")
+
+            cursor12 = self.conexion.cursor()
+            codigo_producto = int(input("Ingrese el codigo del producto: "))
+            consulta11 = f"""SELECT cod_producto FROM producto WHERE cod_producto = '{codigo_producto}'"""
+            cursor12.execute(consulta11)
+            resultados4 = cursor12.fetchone()
+
+            try:
+
+                if codigo_producto in resultados4:
+
+                    cursor13 = self.conexion.cursor()
+                    consulta12 = f"""DELETE FROM producto WHERE cod_producto = '{codigo_producto}'"""
+                    cursor13.execute(consulta12)
+                    self.conexion.commit()
+                    cursor13.close()
+
+                    print("*----------------------------------------------------------------*")
+                    print("******************************************************************")
+                    print("**************** El producto ha sido eliminado *******************")
+                    print("******************************************************************")
+                    print("*----------------------------------------------------------------*")
+
+                else:
+
+                    print("*--------------------------------------------------*")
+                    print("****************************************************")
+                    print("******* El codigo ingresado no esta asociado *******")
+                    print("*********** a ningun producto existente ************")
+                    print("****************************************************")
+                    print("*--------------------------------------------------*")  
+
+            except:
+
+                print("*--------------------------------------------------*")
+                print("****************************************************")
+                print("******* El codigo ingresado no esta asociado *******")
+                print("*********** a ningun producto existente ************")
+                print("****************************************************")
+                print("*--------------------------------------------------*")
+
+        else:
+            print("*----------------------------------------------------------*")
+            print("***********************************************************")
+            print("**** No tienes los permisos para utilizar esta funcion ****")
+            print("***********************************************************")
+            print("*---------------------------------------------------------*")  
+
+# Creacion de objeto de la clase "Login".
+
 login1 = Login()
 
-#Creacion del Programa Principal.
+# Programa Principal
+
 while True:
 
     menuLogin()
@@ -405,11 +1198,21 @@ while True:
         break
 
     else:
-        print("*------------------------------------------*")
-        print("********************************************")
-        print("** La opcion ingresada no esta disponible **")
-        print("********************************************")
-        print("*------------------------------------------*")
+
+        print("*--------------------------------*")
+        print("**********************************")
+        print("** La opcion ingresada no esta  **")
+        print("************ disponible **********")
+        print("**********************************")
+        print("*--------------------------------*")
+
+
+
+
+        
+
+
+
 
 
         
